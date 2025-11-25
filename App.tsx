@@ -32,7 +32,6 @@ import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
 import ProjectCard from './components/ArtistCard'; 
-import AIChat from './components/AIChat';
 import Intro from './components/Intro';
 import { Project } from './types';
 
@@ -173,7 +172,6 @@ const App: React.FC = () => {
         {showIntro && <Intro onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>
 
-      <AIChat />
       
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-8 py-6 mix-blend-difference">
@@ -482,8 +480,12 @@ const App: React.FC = () => {
                 desc: 'Looking for a teammate? I bring leadership from the pitch to the repo.', 
                 icon: Trophy,
                 features: ['Open Source', 'Team Leadership', 'Mentorship'],
-                action: 'Let\'s Talk',
-                link: 'mailto:vesni277@gmail.com?subject=Collaboration'
+                action: '', // Placeholder
+                link: '', // Placeholder
+                buttons: [
+                   { label: 'Email', sub: '(Longer Wait)', link: 'mailto:vesni277@gmail.com?subject=Collaboration' },
+                   { label: 'Instagram', sub: '(Faster Reply)', link: 'https://www.instagram.com/https.vesni/' }
+                ]
               },
             ].map((card, i) => (
               <motion.div
@@ -506,19 +508,36 @@ const App: React.FC = () => {
                   ))}
                 </ul>
                 
-                <a 
-                  href={card.link.startsWith('http') || card.link.startsWith('mailto') ? card.link : `#${card.link}`}
-                  onClick={(e) => {
-                    if (!card.link.startsWith('http') && !card.link.startsWith('mailto')) {
-                       e.preventDefault();
-                       scrollToSection(card.link);
-                    }
-                  }}
-                  className="w-full py-4 mt-8 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-[0.2em] border border-white/20 hover:bg-white hover:text-black transition-all"
-                  data-hover="true"
-                >
-                  {card.action}
-                </a>
+                {card.buttons ? (
+                   <div className="mt-8 flex flex-col gap-3 w-full">
+                      {card.buttons.map((btn, idx) => (
+                        <a 
+                           key={idx}
+                           href={btn.link}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className="w-full py-3 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-widest border border-white/20 hover:bg-white hover:text-black transition-all text-center"
+                           data-hover="true"
+                        >
+                           {btn.label} <span className="opacity-60 text-[10px] normal-case tracking-normal whitespace-nowrap">{btn.sub}</span>
+                        </a>
+                      ))}
+                   </div>
+                ) : (
+                    <a 
+                      href={card.link.startsWith('http') || card.link.startsWith('mailto') ? card.link : `#${card.link}`}
+                      onClick={(e) => {
+                        if (!card.link.startsWith('http') && !card.link.startsWith('mailto')) {
+                           e.preventDefault();
+                           scrollToSection(card.link);
+                        }
+                      }}
+                      className="w-full py-4 mt-8 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-[0.2em] border border-white/20 hover:bg-white hover:text-black transition-all"
+                      data-hover="true"
+                    >
+                      {card.action}
+                    </a>
+                )}
               </motion.div>
             ))}
           </div>
