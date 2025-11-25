@@ -33,6 +33,7 @@ import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
 import ProjectCard from './components/ArtistCard'; 
 import AIChat from './components/AIChat';
+import Intro from './components/Intro';
 import { Project } from './types';
 
 // Portfolio Data
@@ -121,6 +122,7 @@ const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeTab, setActiveTab] = useState('tech');
+  const [showIntro, setShowIntro] = useState(true);
 
   // Handle keyboard navigation for project modal
   useEffect(() => {
@@ -162,9 +164,15 @@ const App: React.FC = () => {
   };
   
   return (
-    <div className="relative min-h-screen text-white selection:bg-[#4fb7b3] selection:text-black cursor-auto md:cursor-none overflow-x-hidden font-sans">
+    <div className={`relative min-h-screen text-white selection:bg-[#4fb7b3] selection:text-black cursor-auto md:cursor-none font-sans ${showIntro ? 'overflow-hidden h-screen' : 'overflow-x-hidden'}`}>
       <CustomCursor />
       <FluidBackground />
+      
+      {/* Intro Animation Overlay */}
+      <AnimatePresence>
+        {showIntro && <Intro onComplete={() => setShowIntro(false)} />}
+      </AnimatePresence>
+
       <AIChat />
       
       {/* Navigation */}
@@ -238,7 +246,7 @@ const App: React.FC = () => {
            {/* Chips */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={!showIntro ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1, delay: 0.2 }}
             className="flex flex-wrap justify-center items-center gap-3 md:gap-4 text-[10px] md:text-sm font-mono text-[#a8fbd3] tracking-widest uppercase mb-4"
           >
@@ -269,14 +277,14 @@ const App: React.FC = () => {
           
           <motion.div
              initial={{ scaleX: 0 }}
-             animate={{ scaleX: 1 }}
+             animate={!showIntro ? { scaleX: 1 } : {}}
              transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
              className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-[#a8fbd3] to-transparent mt-4 md:mt-8 mb-6 md:mb-8"
           />
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={!showIntro ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.8, duration: 1 }}
             className="text-base md:text-xl font-light max-w-2xl mx-auto text-gray-300 leading-relaxed px-4"
           >
@@ -285,7 +293,7 @@ const App: React.FC = () => {
           
           <motion.div 
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={!showIntro ? { opacity: 1 } : {}}
             transition={{ delay: 1.2, duration: 1 }}
             className="flex gap-4 mt-8"
           >
