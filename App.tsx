@@ -117,11 +117,27 @@ const SOCIALS = [
 const App: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  // Increased threshold from 0.2 to 0.5 so text stays visible longer during scroll
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]); 
+  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeTab, setActiveTab] = useState('tech');
   const [showIntro, setShowIntro] = useState(true);
+
+  // Prevent browser scroll restoration to ensure animations start from top
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    // Force scroll to top when intro finishes to prevent "hidden" state
+    window.scrollTo(0, 0);
+  };
 
   // Handle keyboard navigation for project modal
   useEffect(() => {
@@ -169,7 +185,7 @@ const App: React.FC = () => {
       
       {/* Intro Animation Overlay */}
       <AnimatePresence>
-        {showIntro && <Intro onComplete={() => setShowIntro(false)} />}
+        {showIntro && <Intro onComplete={handleIntroComplete} />}
       </AnimatePresence>
 
       
@@ -259,13 +275,21 @@ const App: React.FC = () => {
             </span>
           </motion.div>
 
-          {/* Main Title */}
+          {/* Main Title - Wrapped in separate motion div for entrance animation */}
           <div className="relative w-full flex justify-center items-center">
-            <GradientText 
-              text="VESNI" 
-              as="h1" 
-              className="text-[18vw] md:text-[16vw] leading-[0.8] font-black tracking-tighter text-center" 
-            />
+            <motion.div
+               initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+               animate={!showIntro ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
+               transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+               className="relative z-20"
+            >
+              <GradientText 
+                text="VESNI" 
+                as="h1" 
+                className="text-[18vw] md:text-[16vw] leading-[0.8] font-black tracking-tighter text-center" 
+              />
+            </motion.div>
+            
             <motion.div 
                className="absolute -z-20 w-[50vw] h-[50vw] bg-[#4fb7b3]/10 blur-[60px] rounded-full pointer-events-none"
                animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.2, 0.4, 0.2] }}
