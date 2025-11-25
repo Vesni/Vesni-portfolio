@@ -1,21 +1,23 @@
+
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useSpring, useMotionValue } from 'framer-motion';
 
 const CustomCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
+  const isHoveringRef = useRef(false); // To avoid state updates if value hasn't changed
   
   // Initialize off-screen to prevent flash
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
   
-  // Smooth spring animation
-  const springConfig = { damping: 20, stiffness: 350, mass: 0.1 }; 
+  // Smooth spring animation configuration
+  const springConfig = { damping: 25, stiffness: 400, mass: 0.1 }; 
   const x = useSpring(mouseX, springConfig);
   const y = useSpring(mouseY, springConfig);
 
@@ -24,11 +26,24 @@ const CustomCursor: React.FC = () => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
 
+      // Check hover state
+      // Using simple tag checks first for performance before using closest()
       const target = e.target as HTMLElement;
-      const clickable = target.closest('button') || 
-                        target.closest('a') || 
-                        target.closest('[data-hover="true"]');
-      setIsHovering(!!clickable);
+      const tagName = target.tagName.toLowerCase();
+      
+      let hovering = false;
+      if (tagName === 'button' || tagName === 'a' || tagName === 'input') {
+        hovering = true;
+      } else {
+        // Only check closest if strictly necessary
+        hovering = !!target.closest('[data-hover="true"]');
+      }
+
+      // Only update state if it actually changed to prevent re-renders
+      if (hovering !== isHoveringRef.current) {
+        isHoveringRef.current = hovering;
+        setIsHovering(hovering);
+      }
     };
 
     window.addEventListener('mousemove', updateMousePosition, { passive: true });
@@ -40,18 +55,14 @@ const CustomCursor: React.FC = () => {
       className="fixed top-0 left-0 z-[9999] pointer-events-none mix-blend-difference flex items-center justify-center hidden md:flex will-change-transform"
       style={{ x, y, translateX: '-50%', translateY: '-50%' }}
     >
-      {/* This div is the actual cursor "body" and will handle the scaling and text centering */}
-      {/* Changed base size to 80px diameter (40px radius) */}
       <motion.div
         className="relative rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.3)] flex items-center justify-center"
         style={{ width: 80, height: 80 }}
         animate={{
-          // Scaled by 1.5 to become 120px diameter (60px radius) when hovering
           scale: isHovering ? 1.5 : 1, 
         }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
       >
-        {/* Text directly inside the scalable cursor body, centered by flex parent */}
         <motion.span 
           className="z-10 text-black font-black uppercase tracking-widest text-sm overflow-hidden whitespace-nowrap"
           initial={{ opacity: 0 }}
