@@ -4,31 +4,32 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldAlert, Lock, Unlock, Wifi, Battery, Skull, Fingerprint, Terminal, AlertTriangle } from 'lucide-react';
+import { Lock, Wifi, Battery, Skull, Fingerprint, Terminal, AlertTriangle } from 'lucide-react';
 
 interface IntroProps {
   onComplete: () => void;
 }
 
+// Reduced particle count for better performance
 const MatrixBackground = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-    {Array.from({ length: 25 }).map((_, i) => (
+    {Array.from({ length: 15 }).map((_, i) => (
       <motion.div
-        key={i}
+        key={`matrix-${i}`}
         className="absolute text-[#4fb7b3] font-mono text-[10px] md:text-xs writing-vertical-rl whitespace-nowrap shadow-[0_0_8px_rgba(79,183,179,0.4)]"
         initial={{ top: -200, left: `${Math.random() * 100}%`, opacity: 0 }}
         animate={{ top: '120%', opacity: [0, 1, 0] }}
         transition={{ 
-          duration: Math.random() * 3 + 2, 
+          duration: Math.random() * 3 + 3, // Slower duration for less CPU load
           repeat: Infinity, 
           delay: Math.random() * 5,
           ease: "linear"
         }}
         style={{ filter: 'blur(0.5px)' }}
       >
-        {Array.from({ length: 40 }).map(() => Math.random() > 0.5 ? '1' : '0').join('')}
+        {Array.from({ length: 30 }).map(() => Math.random() > 0.5 ? '1' : '0').join('')}
       </motion.div>
     ))}
   </div>
@@ -52,51 +53,64 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
   const [stage, setStage] = useState<'scan' | 'denied' | 'hack' | 'breach' | 'override' | 'reveal'>('scan');
   const [progress, setProgress] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
+  const [mounted, setMounted] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
     const sequence = async () => {
-      // Stage 1: Biometric Scan
-      await new Promise(r => setTimeout(r, 2000));
+      // Helper to wait safely
+      const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
+
+      await wait(2000);
+      if (!isMounted) return;
       
-      // Stage 2: Access Denied
       setStage('denied');
-      await new Promise(r => setTimeout(r, 1000));
+      await wait(1000);
+      if (!isMounted) return;
 
-      // Stage 3: System Hack (Glitch)
       setStage('hack');
-      await new Promise(r => setTimeout(r, 1200));
+      await wait(1200);
+      if (!isMounted) return;
 
-      // Stage 4: Breach Warning
       setStage('breach');
-      await new Promise(r => setTimeout(r, 1500));
+      await wait(1500);
+      if (!isMounted) return;
 
-      // Stage 5: Terminal Override
       setStage('override');
       
       // Simulate fast terminal logs
       for (let i = 0; i < TERMINAL_LOGS.length; i++) {
+        if (!isMounted) break;
         setLogs(prev => [...prev, TERMINAL_LOGS[i]]);
-        // Vary the speed slightly for realism
-        await new Promise(r => setTimeout(r, Math.random() * 150 + 50)); 
-        // Update progress bar
+        await wait(Math.random() * 100 + 50);
         setProgress((i + 1) / TERMINAL_LOGS.length * 100);
       }
       
-      await new Promise(r => setTimeout(r, 800));
+      if (!isMounted) return;
+      await wait(800);
 
-      // Stage 6: Final Reveal
+      if (!isMounted) return;
       setStage('reveal');
-      await new Promise(r => setTimeout(r, 2000));
+      await wait(2000);
       
-      onComplete();
+      if (isMounted) {
+        onComplete();
+      }
     };
 
     sequence();
+
+    return () => {
+      isMounted = false;
+      setMounted(false);
+    };
   }, [onComplete]);
 
   return (
     <motion.div
       className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center font-mono overflow-hidden text-white"
+      initial={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)", transition: { duration: 0.8 } }}
     >
       <MatrixBackground />
@@ -121,20 +135,18 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
                     ? { duration: 0.8, ease: "circIn" }
                     : { duration: 0.8, type: "spring" }
         }
-        className="relative w-[320px] h-[640px] bg-[#0a0a0a] rounded-[48px] border-[6px] border-[#2a2a2a] shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden z-20"
+        className="relative w-[300px] md:w-[320px] h-[600px] md:h-[640px] bg-[#0a0a0a] rounded-[48px] border-[6px] border-[#2a2a2a] shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden z-20"
       >
         {/* Hardware Buttons */}
-        <div className="absolute -left-[6px] top-24 w-[6px] h-10 bg-[#2a2a2a] rounded-l-md" /> {/* Vol Up */}
-        <div className="absolute -left-[6px] top-36 w-[6px] h-10 bg-[#2a2a2a] rounded-l-md" /> {/* Vol Down */}
-        <div className="absolute -right-[6px] top-28 w-[6px] h-16 bg-[#2a2a2a] rounded-r-md" /> {/* Power */}
+        <div className="absolute -left-[6px] top-24 w-[6px] h-10 bg-[#2a2a2a] rounded-l-md" /> 
+        <div className="absolute -left-[6px] top-36 w-[6px] h-10 bg-[#2a2a2a] rounded-l-md" /> 
+        <div className="absolute -right-[6px] top-28 w-[6px] h-16 bg-[#2a2a2a] rounded-r-md" /> 
 
         {/* Dynamic Island / Notch */}
         <div className="absolute top-4 left-1/2 -translate-x-1/2 w-[100px] h-[28px] bg-black rounded-full z-40 flex items-center justify-center gap-3 px-3">
-             {/* Camera Lens */}
              <div className="w-3 h-3 rounded-full bg-[#111] ring-1 ring-[#333] relative">
                  <div className="absolute inset-[30%] bg-[#000033] rounded-full opacity-60"></div>
              </div>
-             {/* Sensor */}
              <div className="w-1.5 h-1.5 rounded-full bg-[#111] opacity-50"></div>
         </div>
 
@@ -166,7 +178,6 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
                         <div className="relative mb-8">
                              <Fingerprint className="w-24 h-24 text-white/20" strokeWidth={1} />
                              
-                             {/* Scanning Laser */}
                              <motion.div 
                                 className="absolute left-0 right-0 h-1 bg-[#4fb7b3] shadow-[0_0_15px_rgba(79,183,179,0.8)]"
                                 initial={{ top: "0%" }}
@@ -174,7 +185,6 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
                                 transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
                              />
                              
-                             {/* HUD Elements */}
                              <motion.div 
                                 className="absolute -inset-4 border border-[#4fb7b3]/30 rounded-lg border-dashed"
                                 animate={{ rotate: 360 }}
@@ -264,13 +274,11 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                     >
-                        {/* Terminal Header */}
                         <div className="flex items-center gap-2 text-gray-500 mb-4 border-b border-gray-800 pb-2">
                              <Terminal className="w-3 h-3" />
                              <span className="text-[10px] font-mono">root@vesni-server:~</span>
                         </div>
 
-                        {/* Logs */}
                         <div className="flex-1 overflow-hidden font-mono text-[10px] space-y-1 text-left relative">
                             {logs.map((log, i) => (
                                 <motion.div 
@@ -282,7 +290,6 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
                                     {log}
                                 </motion.div>
                             ))}
-                            {/* Cursor */}
                             <motion.div 
                                 animate={{ opacity: [0, 1] }} 
                                 transition={{ repeat: Infinity, duration: 0.5 }}
@@ -290,7 +297,6 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
                             />
                         </div>
                         
-                        {/* Progress Bar */}
                         <div className="mt-4">
                             <div className="flex justify-between text-[8px] text-[#4fb7b3] mb-1 font-mono">
                                 <span>INJECTING_ASSETS</span>

@@ -40,8 +40,26 @@ Vesni is a Full-Stack Web Developer, Ethical Pen-Tester, Footballer, and Gamer.
 
 let ai: GoogleGenAI | null = null;
 
+// Helper to safely get env vars without crashing in browser
+const getEnvVar = (key: string): string | undefined => {
+  try {
+    if (typeof process !== 'undefined' && process.env) {
+      return process.env[key];
+    }
+    // Check for Vite specific env vars if needed in future
+    // @ts-ignore
+    if (typeof import.meta !== 'undefined' && import.meta.env) {
+      // @ts-ignore
+      return import.meta.env[`VITE_${key}`] || import.meta.env[key];
+    }
+  } catch (e) {
+    console.warn("Environment variable access failed", e);
+  }
+  return undefined;
+};
+
 export const initializeGemini = () => {
-  const apiKey = process.env.API_KEY;
+  const apiKey = getEnvVar('API_KEY');
   if (!apiKey) return;
   
   ai = new GoogleGenAI({ apiKey });
@@ -53,8 +71,7 @@ export const sendMessageToGemini = async (message: string): Promise<string> => {
   }
   
   if (!ai) {
-     // Fallback if no API key is present in environment (for demo purposes)
-     return "TermLink Offline: Please configure API_KEY to chat with Vesni AI. For now, check the links in the footer! ⚡️";
+     return "TermLink Offline: API_KEY not configured. Please check connection. ⚡️";
   }
 
   try {

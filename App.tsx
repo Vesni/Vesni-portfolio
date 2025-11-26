@@ -5,7 +5,7 @@
 */
 
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { 
   Github, 
@@ -26,7 +26,7 @@ import {
   Youtube,
   Twitter,
   Instagram,
-  Disc // Using Disc for SoundCloud substitute or generic
+  Disc 
 } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
