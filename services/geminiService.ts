@@ -4,87 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import { GoogleGenAI } from "@google/genai";
-
-const SYSTEM_INSTRUCTION = `
-You are the AI Assistant for Vesni's Portfolio. 
-Vesni is a Full-Stack Web Developer, Ethical Pen-Tester, Footballer, and Gamer.
-
-**Vesni's Core Info:**
-- **Email:** vesni277@gmail.com
-- **Role:** Web Developer & Ethical Security Researcher.
-- **Key Skills:** HTML, CSS, JavaScript, PHP, Python, Burp Suite, Nmap.
-- **Current Top Project:** PC26 (Paper Cricket WC) - A web game with 400+ active users.
-
-**Socials & Links (Provide these when asked):**
-- **YouTube:** https://www.youtube.com/@NotebookLMgoogl
-- **Discord:** ethical_vesni (Server: https://discord.gg/tZE7WEkyhH)
-- **Instagram:** https://www.instagram.com/https.vesni/
-- **Twitter/X:** https://x.com/NextYTreal
-- **GitHub:** https://github.com/Vesni
-- **Vercel Projects:** https://vercel.com/vesnis-projects
-- **SoundCloud:** https://soundcloud.com/vesni-lanus
-- **Cricket Profile (ICA):** https://cricheroes.com/player-profile/43662014/vesni/matches
-
-**Guidelines:**
-- Be professional but cool (cyberpunk/hacker vibe).
-- **Security:** Emphasize that all security work is ETHICAL and done in controlled labs.
-- **Football:** Vesni has a captain-level mindset.
-- **Gaming:** Competitive gamer.
-- If asked about "PC26", describe it as his top game with 400+ users worldwide (https://pcwc.vercel.app/).
-
-**Response Style:**
-- Short, punchy, terminal-style output.
-- Use emojis like ⚡️, 🛡️, ⚽, 💻.
-`;
-
-let ai: GoogleGenAI | null = null;
-
-// Helper to safely get env vars without crashing in browser
-const getEnvVar = (key: string): string | undefined => {
-  try {
-    if (typeof process !== 'undefined' && process.env) {
-      return process.env[key];
-    }
-    // Check for Vite specific env vars if needed in future
-    // @ts-ignore
-    if (typeof import.meta !== 'undefined' && import.meta.env) {
-      // @ts-ignore
-      return import.meta.env[`VITE_${key}`] || import.meta.env[key];
-    }
-  } catch (e) {
-    console.warn("Environment variable access failed", e);
-  }
-  return undefined;
-};
+// Service disabled as requested.
+// This file is kept as a stub to prevent import errors in any remaining references.
 
 export const initializeGemini = () => {
-  const apiKey = getEnvVar('API_KEY');
-  if (!apiKey) return;
-  
-  ai = new GoogleGenAI({ apiKey });
+  console.log("AI Service Disabled");
 };
 
 export const sendMessageToGemini = async (message: string): Promise<string> => {
-  if (!ai) {
-    initializeGemini();
-  }
-  
-  if (!ai) {
-     return "TermLink Offline: API_KEY not configured. Please check connection. ⚡️";
-  }
-
-  try {
-    const result = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: message,
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION
-      }
-    });
-    return result.text || "";
-  } catch (error) {
-    console.error("AI Error:", error);
-    return "Connection interrupted. Handshake failed. Try again later. 🛡️";
-  }
+  return "AI Service is currently offline.";
 };

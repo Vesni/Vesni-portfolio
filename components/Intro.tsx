@@ -6,341 +6,312 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, Wifi, Battery, Skull, Fingerprint, Terminal, AlertTriangle } from 'lucide-react';
+import { Wifi, Battery, Signal, Lock, Unlock, MessageSquare, Terminal, AlertTriangle, Smartphone, Skull } from 'lucide-react';
 
 interface IntroProps {
   onComplete: () => void;
 }
 
-// Reduced particle count for better performance
-const MatrixBackground = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-    {Array.from({ length: 15 }).map((_, i) => (
-      <motion.div
-        key={`matrix-${i}`}
-        className="absolute text-[#4fb7b3] font-mono text-[10px] md:text-xs writing-vertical-rl whitespace-nowrap shadow-[0_0_8px_rgba(79,183,179,0.4)]"
-        initial={{ top: -200, left: `${Math.random() * 100}%`, opacity: 0 }}
-        animate={{ top: '120%', opacity: [0, 1, 0] }}
-        transition={{ 
-          duration: Math.random() * 3 + 3, // Slower duration for less CPU load
-          repeat: Infinity, 
-          delay: Math.random() * 5,
-          ease: "linear"
-        }}
-        style={{ filter: 'blur(0.5px)' }}
-      >
-        {Array.from({ length: 30 }).map(() => Math.random() > 0.5 ? '1' : '0').join('')}
-      </motion.div>
-    ))}
-  </div>
-);
-
 const TERMINAL_LOGS = [
-  "root@sys:~# initiating_handshake...",
-  "[WARN] firewall_detected: 192.168.x.x",
-  "> injecting_payload: shellcode_v4.asm",
-  "> bypassing_proxy_chain...",
-  "[SUCCESS] port_22_open",
-  "> brute_forcing_credentials...",
-  "root_access: GRANTED",
-  "> decrypting_user_data...",
-  "[INFO] fetching_portfolio_assets...",
-  "> mounting_filesystem: /vesni/projects",
-  "SYSTEM_OVERRIDE_COMPLETE"
+  "--- INITIATING ROOT ACCESS ---",
+  "> bypassing_secure_boot...",
+  "> injecting_payload: exploit_v9.bin",
+  "> modifying_system_partition...",
+  "[SUCCESS] superuser_privileges: GRANTED",
+  "> disabling_security_services...",
+  "> mounting /data/portfolio...",
+  "> executing: LOAD_VESNI_PROFILE.exe",
+  "SYSTEM OWNED."
 ];
 
 const Intro: React.FC<IntroProps> = ({ onComplete }) => {
-  const [stage, setStage] = useState<'scan' | 'denied' | 'hack' | 'breach' | 'override' | 'reveal'>('scan');
-  const [progress, setProgress] = useState(0);
+  const [stage, setStage] = useState<'locked' | 'message' | 'bruteforce' | 'unlocked' | 'glitch' | 'terminal' | 'reveal'>('locked');
+  const [pin, setPin] = useState<string[]>(['', '', '', '']);
   const [logs, setLogs] = useState<string[]>([]);
-  const [mounted, setMounted] = useState(true);
+  const [batteryLevel, setBatteryLevel] = useState(84);
 
   useEffect(() => {
     let isMounted = true;
+    const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
 
     const sequence = async () => {
-      // Helper to wait safely
-      const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
-
-      await wait(2000);
-      if (!isMounted) return;
-      
-      setStage('denied');
-      await wait(1000);
-      if (!isMounted) return;
-
-      setStage('hack');
-      await wait(1200);
-      if (!isMounted) return;
-
-      setStage('breach');
+      // 1. Locked State
       await wait(1500);
       if (!isMounted) return;
 
-      setStage('override');
-      
-      // Simulate fast terminal logs
-      for (let i = 0; i < TERMINAL_LOGS.length; i++) {
-        if (!isMounted) break;
-        setLogs(prev => [...prev, TERMINAL_LOGS[i]]);
-        await wait(Math.random() * 100 + 50);
-        setProgress((i + 1) / TERMINAL_LOGS.length * 100);
-      }
-      
+      // 2. Message Received
+      setStage('message');
+      await wait(2000);
       if (!isMounted) return;
+
+      // 3. Brute Force PIN
+      setStage('bruteforce');
+      await wait(500);
+      
+      // Simulate rapid pin entry
+      for (let i = 0; i < 4; i++) {
+        if (!isMounted) return;
+        setPin(prev => {
+          const newPin = [...prev];
+          newPin[i] = Math.floor(Math.random() * 10).toString();
+          return newPin;
+        });
+        await wait(150);
+      }
+      await wait(200);
+
+      // 4. Unlock to Home Screen
+      if (!isMounted) return;
+      setStage('unlocked');
       await wait(800);
 
+      // 5. System Glitch
+      if (!isMounted) return;
+      setStage('glitch');
+      // Drain battery visual
+      const drainInterval = setInterval(() => {
+        setBatteryLevel(prev => Math.max(0, prev - Math.floor(Math.random() * 20)));
+      }, 100);
+      
+      await wait(1500);
+      clearInterval(drainInterval);
+      if (!isMounted) return;
+
+      // 6. Terminal Rooting
+      setStage('terminal');
+      for (const log of TERMINAL_LOGS) {
+        if (!isMounted) break;
+        setLogs(prev => [...prev, log]);
+        await wait(Math.random() * 150 + 50);
+      }
+      await wait(500);
+
+      // 7. Reveal
       if (!isMounted) return;
       setStage('reveal');
       await wait(2000);
-      
-      if (isMounted) {
-        onComplete();
-      }
+
+      if (isMounted) onComplete();
     };
 
     sequence();
-
-    return () => {
-      isMounted = false;
-      setMounted(false);
-    };
+    return () => { isMounted = false; };
   }, [onComplete]);
+
+  // Current time for lock screen
+  const time = new Date();
+  const timeString = time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  const dateString = time.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center font-mono overflow-hidden text-white"
+      className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center font-sans overflow-hidden"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)", transition: { duration: 0.8 } }}
+      exit={{ opacity: 0, scale: 1.2, filter: "blur(20px)", transition: { duration: 0.8 } }}
     >
-      <MatrixBackground />
-      
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-[#050505]">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      </div>
+
       {/* Phone Container */}
       <motion.div
-        initial={{ y: 100, opacity: 0 }}
+        className="relative w-[300px] md:w-[340px] h-[620px] md:h-[680px] bg-[#000] rounded-[50px] shadow-[0_0_0_4px_#1a1a1a,0_0_0_6px_#000,0_0_100px_rgba(79,183,179,0.1)] z-20 overflow-hidden"
+        initial={{ scale: 0.9, opacity: 0 }}
         animate={
           stage === 'reveal' 
-            ? { scale: 30, opacity: 0, rotate: 5 } 
-            : { 
-                y: 0, 
-                opacity: 1, 
-                x: stage === 'hack' ? [-5, 5, -5, 5, 0] : 0,
-                rotate: stage === 'hack' ? [-2, 2, -2, 2, 0] : 0
-              }
+          ? { scale: 20, opacity: 0 } 
+          : { scale: 1, opacity: 1, rotate: stage === 'glitch' ? [0, -1, 1, -1, 0] : 0 }
         }
-        transition={
-            stage === 'hack' 
-                ? { duration: 0.2, repeat: 4 } 
-                : stage === 'reveal'
-                    ? { duration: 0.8, ease: "circIn" }
-                    : { duration: 0.8, type: "spring" }
-        }
-        className="relative w-[300px] md:w-[320px] h-[600px] md:h-[640px] bg-[#0a0a0a] rounded-[48px] border-[6px] border-[#2a2a2a] shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden z-20"
+        transition={stage === 'reveal' ? { duration: 0.8, ease: "circIn" } : { duration: 0.5 }}
       >
-        {/* Hardware Buttons */}
-        <div className="absolute -left-[6px] top-24 w-[6px] h-10 bg-[#2a2a2a] rounded-l-md" /> 
-        <div className="absolute -left-[6px] top-36 w-[6px] h-10 bg-[#2a2a2a] rounded-l-md" /> 
-        <div className="absolute -right-[6px] top-28 w-[6px] h-16 bg-[#2a2a2a] rounded-r-md" /> 
-
-        {/* Dynamic Island / Notch */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-[100px] h-[28px] bg-black rounded-full z-40 flex items-center justify-center gap-3 px-3">
-             <div className="w-3 h-3 rounded-full bg-[#111] ring-1 ring-[#333] relative">
-                 <div className="absolute inset-[30%] bg-[#000033] rounded-full opacity-60"></div>
+        {/* Hardware Details */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[28px] w-[120px] bg-black z-50 rounded-b-[16px] flex justify-center items-center gap-4">
+             {/* Speaker */}
+             <div className="w-16 h-1.5 bg-[#1a1a1a] rounded-full opacity-50"></div>
+             {/* Camera */}
+             <div className="w-2 h-2 rounded-full bg-[#111] ring-1 ring-[#222]">
+                 <div className="w-1 h-1 bg-[#000033] rounded-full opacity-60 m-0.5"></div>
              </div>
-             <div className="w-1.5 h-1.5 rounded-full bg-[#111] opacity-50"></div>
         </div>
 
         {/* Status Bar */}
-        <div className="absolute top-5 left-8 right-8 flex justify-between text-[11px] font-semibold text-white z-30 font-sans tracking-wide">
-            <span>13:37</span>
+        <div className="absolute top-3 left-6 right-6 flex justify-between text-[10px] font-medium text-white z-40 px-2">
+            <span>{timeString}</span>
             <div className="flex gap-1.5 items-center">
-                <Wifi className="w-3.5 h-3.5" />
-                <Battery className="w-3.5 h-3.5" />
+                <Signal className="w-3 h-3" />
+                <Wifi className="w-3 h-3" />
+                <div className="flex items-center gap-0.5">
+                    <span className="text-[9px]">{batteryLevel}%</span>
+                    <Battery className={`w-3.5 h-3.5 ${batteryLevel < 20 ? 'text-red-500' : 'text-white'}`} />
+                </div>
             </div>
         </div>
 
-        {/* Glass Reflection Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-transparent pointer-events-none z-50 rounded-[40px]" />
-
         {/* Screen Content */}
-        <div className="relative w-full h-full bg-[#050505] flex flex-col items-center justify-center p-6 overflow-hidden">
+        <div className="relative w-full h-full bg-black overflow-hidden flex flex-col">
             
             <AnimatePresence mode="wait">
-                {/* 1. BIOMETRIC SCAN */}
-                {stage === 'scan' && (
+                {/* STAGE 1-3: LOCK SCREEN */}
+                {(stage === 'locked' || stage === 'message' || stage === 'bruteforce') && (
                     <motion.div
-                        key="scan"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="flex flex-col items-center justify-center h-full w-full"
+                        key="lockscreen"
+                        className="w-full h-full flex flex-col items-center pt-20 px-6 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center"
+                        exit={{ opacity: 0, scale: 1.1 }}
                     >
-                        <div className="relative mb-8">
-                             <Fingerprint className="w-24 h-24 text-white/20" strokeWidth={1} />
-                             
-                             <motion.div 
-                                className="absolute left-0 right-0 h-1 bg-[#4fb7b3] shadow-[0_0_15px_rgba(79,183,179,0.8)]"
-                                initial={{ top: "0%" }}
-                                animate={{ top: "100%" }}
-                                transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-                             />
-                             
-                             <motion.div 
-                                className="absolute -inset-4 border border-[#4fb7b3]/30 rounded-lg border-dashed"
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                             />
-                        </div>
-                        <div className="text-center">
-                            <motion.h3 
-                                animate={{ opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 1.5, repeat: Infinity }}
-                                className="text-white font-medium text-sm tracking-[0.2em] mb-2"
-                            >
-                                SYSTEM LOCKED
-                            </motion.h3>
-                            <p className="text-[10px] text-white/40 font-mono">BIOMETRIC AUTH REQUIRED</p>
-                        </div>
-                    </motion.div>
-                )}
-
-                {/* 2. ACCESS DENIED */}
-                {stage === 'denied' && (
-                     <motion.div
-                        key="denied"
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="absolute inset-0 flex flex-col items-center justify-center bg-red-900/10 backdrop-blur-sm z-10"
-                     >
-                         <Lock className="w-16 h-16 text-red-500 mb-4" />
-                         <h2 className="text-red-500 font-bold text-xl tracking-widest">ACCESS DENIED</h2>
-                         <p className="text-red-400/60 text-xs mt-2 font-mono">IDENTITY NOT VERIFIED</p>
-                     </motion.div>
-                )}
-
-                {/* 3. SYSTEM HACK */}
-                {stage === 'hack' && (
-                    <motion.div
-                        key="hack"
-                        className="absolute inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center"
-                    >
-                        {/* Background Code Dump */}
-                        <div className="absolute inset-0 opacity-20 text-[8px] text-red-500 font-mono p-4 overflow-hidden leading-none break-all">
-                             {Array.from({length: 40}).map((_, i) => (
-                                 <div key={i}>{Math.random().toString(36).substring(2)} {Math.random().toString(16).substring(2)} KERNEL_PANIC 0x000{i}</div>
-                             ))}
-                        </div>
-
-                        <motion.div
-                             className="z-10 flex flex-col items-center"
-                             animate={{ x: [-2, 2, -2, 2, 0] }}
-                             transition={{ repeat: Infinity, duration: 0.1 }}
-                        >
-                             <Skull className="w-20 h-20 text-red-600 mb-4 animate-pulse" />
-                             <h1 className="text-4xl font-black text-red-600 tracking-tighter mix-blend-difference">ERROR</h1>
-                             <div className="bg-red-600 text-black font-bold px-2 py-0.5 text-xs mt-2">FATAL EXCEPTION</div>
-                        </motion.div>
-                    </motion.div>
-                )}
-
-                {/* 4. SECURITY BREACH */}
-                {stage === 'breach' && (
-                    <motion.div
-                        key="breach"
-                        className="absolute inset-0 bg-yellow-900/20 flex flex-col items-center justify-center p-6 text-center border-4 border-yellow-500/20"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        <AlertTriangle className="w-16 h-16 text-yellow-500 mb-6 animate-bounce" />
-                        <div className="border border-yellow-500/50 bg-black/50 p-4 w-full backdrop-blur-md">
-                            <h3 className="text-yellow-500 font-bold text-lg mb-2 tracking-wider">SECURITY ALERT</h3>
-                            <div className="h-px w-full bg-yellow-500/30 mb-2" />
-                            <p className="text-[10px] text-yellow-200 font-mono text-left">
-                                > UNAUTHORIZED_ROOT_ACCESS<br/>
-                                > FIREWALL_BREACHED<br/>
-                                > PROXY: BYPASSED
-                            </p>
-                        </div>
-                    </motion.div>
-                )}
-
-                {/* 5. OVERRIDE (TERMINAL) */}
-                {stage === 'override' && (
-                    <motion.div
-                        key="override"
-                        className="absolute inset-0 bg-[#050505] p-6 flex flex-col pt-12"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                    >
-                        <div className="flex items-center gap-2 text-gray-500 mb-4 border-b border-gray-800 pb-2">
-                             <Terminal className="w-3 h-3" />
-                             <span className="text-[10px] font-mono">root@vesni-server:~</span>
-                        </div>
-
-                        <div className="flex-1 overflow-hidden font-mono text-[10px] space-y-1 text-left relative">
-                            {logs.map((log, i) => (
-                                <motion.div 
-                                    key={i} 
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    className={`${log.includes('SUCCESS') || log.includes('GRANTED') ? 'text-green-500' : log.includes('WARN') ? 'text-yellow-500' : 'text-[#4fb7b3]'}`}
-                                >
-                                    {log}
-                                </motion.div>
-                            ))}
-                            <motion.div 
-                                animate={{ opacity: [0, 1] }} 
-                                transition={{ repeat: Infinity, duration: 0.5 }}
-                                className="w-2 h-4 bg-[#4fb7b3] mt-1" 
-                            />
-                        </div>
+                        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
                         
-                        <div className="mt-4">
-                            <div className="flex justify-between text-[8px] text-[#4fb7b3] mb-1 font-mono">
-                                <span>INJECTING_ASSETS</span>
-                                <span>{Math.round(progress)}%</span>
-                            </div>
-                            <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-                                <motion.div 
-                                    className="h-full bg-[#4fb7b3]"
-                                    style={{ width: `${progress}%` }}
-                                />
-                            </div>
+                        <div className="relative z-10 flex flex-col items-center w-full">
+                            <Lock className="w-5 h-5 text-white/70 mb-4" />
+                            <h2 className="text-6xl font-thin text-white tracking-tighter mb-1">{timeString}</h2>
+                            <p className="text-white/80 font-medium text-sm mb-8">{dateString}</p>
+
+                            {/* Notification */}
+                            <AnimatePresence>
+                                {stage !== 'locked' && (
+                                    <motion.div
+                                        initial={{ y: -20, opacity: 0 }}
+                                        animate={{ y: 0, opacity: 1 }}
+                                        exit={{ y: -20, opacity: 0 }}
+                                        className="w-full bg-white/10 backdrop-blur-md rounded-2xl p-3 mb-4 border border-white/10 shadow-lg"
+                                    >
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-500">
+                                                <AlertTriangle className="w-4 h-4" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="flex justify-between items-center mb-0.5">
+                                                    <span className="text-xs font-bold text-white">Unknown</span>
+                                                    <span className="text-[9px] text-white/50">now</span>
+                                                </div>
+                                                <p className="text-xs text-white/90">I'm in.</p>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
+
+                        {/* PIN Pad Visual */}
+                        {stage === 'bruteforce' && (
+                             <motion.div 
+                                className="mt-auto mb-12 relative z-10 flex gap-4"
+                                initial={{ opacity: 0, y: 50 }}
+                                animate={{ opacity: 1, y: 0 }}
+                             >
+                                 {pin.map((digit, i) => (
+                                     <motion.div 
+                                        key={i}
+                                        animate={digit ? { scale: [1, 1.2, 1], backgroundColor: "#ffffff" } : {}}
+                                        className={`w-3 h-3 rounded-full border border-white ${digit ? 'bg-white' : 'bg-transparent'}`}
+                                     />
+                                 ))}
+                             </motion.div>
+                        )}
+                        
+                        {/* Fake Home Bar */}
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/50 rounded-full"></div>
+                    </motion.div>
+                )}
+
+                {/* STAGE 4: HOME SCREEN */}
+                {stage === 'unlocked' && (
+                    <motion.div
+                        key="homescreen"
+                        className="w-full h-full bg-black pt-16 px-6"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                    >
+                        <div className="grid grid-cols-4 gap-4">
+                            {Array.from({length: 24}).map((_, i) => (
+                                <div key={i} className="flex flex-col items-center gap-1">
+                                    <div className={`w-12 h-12 rounded-xl ${i === 2 ? 'bg-[#4fb7b3]' : 'bg-gray-800'} flex items-center justify-center`}>
+                                        {i === 2 && <Terminal className="w-6 h-6 text-black" />}
+                                    </div>
+                                    <div className="w-8 h-1 bg-gray-800/50 rounded-full"></div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="absolute bottom-6 left-4 right-4 h-20 bg-white/5 rounded-[24px] flex items-center justify-around px-2 backdrop-blur-lg">
+                             <div className="w-12 h-12 rounded-xl bg-green-500/80"></div>
+                             <div className="w-12 h-12 rounded-xl bg-blue-500/80"></div>
+                             <div className="w-12 h-12 rounded-xl bg-gray-500/80"></div>
+                             <div className="w-12 h-12 rounded-xl bg-red-500/80"></div>
+                        </div>
+                    </motion.div>
+                )}
+
+                {/* STAGE 5: GLITCH */}
+                {stage === 'glitch' && (
+                    <motion.div
+                        key="glitch"
+                        className="absolute inset-0 bg-red-600 flex flex-col items-center justify-center z-50 overflow-hidden"
+                    >
+                        <div className="absolute inset-0 bg-black opacity-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+                        <Skull className="w-32 h-32 text-black animate-pulse relative z-10" />
+                        <h1 className="text-4xl font-black text-black mt-4 relative z-10 tracking-tighter">SYSTEM<br/>FAILURE</h1>
+                        
+                        {/* Random glitch bars */}
+                        {Array.from({length: 10}).map((_, i) => (
+                             <motion.div
+                                key={i}
+                                className="absolute bg-black w-full h-2"
+                                style={{ top: `${Math.random() * 100}%` }}
+                                animate={{ x: [-100, 100, -50, 0], opacity: [0, 1, 0] }}
+                                transition={{ repeat: Infinity, duration: 0.2, delay: Math.random() }}
+                             />
+                        ))}
+                    </motion.div>
+                )}
+
+                {/* STAGE 6: TERMINAL */}
+                {stage === 'terminal' && (
+                    <motion.div
+                        key="terminal"
+                        className="absolute inset-0 bg-black p-4 pt-16 font-mono text-[10px] text-[#4fb7b3] overflow-hidden"
+                    >
+                         <div className="border-b border-gray-800 pb-2 mb-2 flex items-center gap-2">
+                             <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                             <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                             <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                             <span className="ml-2 opacity-50">root@vesni:~</span>
+                         </div>
+                         <div className="flex flex-col gap-1">
+                             {logs.map((log, i) => (
+                                 <motion.div key={i} initial={{opacity: 0, x: -10}} animate={{opacity: 1, x: 0}}>
+                                     {log}
+                                 </motion.div>
+                             ))}
+                             <motion.div 
+                                animate={{ opacity: [0, 1] }}
+                                transition={{ repeat: Infinity, duration: 0.5 }}
+                                className="w-2 h-4 bg-[#4fb7b3] mt-2"
+                             />
+                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Reflection Overlay */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-transparent rounded-[44px] z-[60]"></div>
         </div>
       </motion.div>
 
       {/* Final Reveal Text Behind Phone */}
+       <AnimatePresence>
        {stage === 'reveal' && (
             <motion.div 
-                className="absolute inset-0 flex flex-col items-center justify-center z-10"
-                initial={{ opacity: 0, scale: 0.8 }}
+                className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none"
+                initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
             >
-                 <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter text-white drop-shadow-[0_0_50px_rgba(79,183,179,0.5)] leading-none mix-blend-screen">
+                 <h1 className="text-[15vw] font-black tracking-tighter text-white leading-none mix-blend-screen select-none">
                    VESNI
                  </h1>
-                 
-                 <div className="flex items-center gap-4 mt-6">
-                    <div className="h-px w-12 md:w-24 bg-gradient-to-r from-transparent to-[#4fb7b3]" />
-                    <motion.div 
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="text-[#a8fbd3] font-mono tracking-[0.5em] uppercase text-xs md:text-sm"
-                    >
-                        Access Granted
-                    </motion.div>
-                    <div className="h-px w-12 md:w-24 bg-gradient-to-l from-transparent to-[#4fb7b3]" />
-                 </div>
             </motion.div>
        )}
+       </AnimatePresence>
     </motion.div>
   );
 };
