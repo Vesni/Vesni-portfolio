@@ -121,7 +121,7 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
                 animate={{ opacity: 1 }}
                 className="flex items-center gap-2 text-[#00ffaa] text-xs md:text-sm mt-4 border-l-2 border-[#00ffaa] pl-3"
               >
-                <span className="font-black animate-pulse">{">"}</span>
+                <span className="font-black animate-pulse">{"\u003E"}</span>
                 <input
                   ref={inputRef}
                   type="text"
