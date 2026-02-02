@@ -33,7 +33,8 @@ import {
   Layout,
   Monitor,
   Smartphone,
-  Tablet as TabletIcon
+  Tablet as TabletIcon,
+  Waves
 } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
@@ -44,6 +45,16 @@ import { Project } from './types';
 const PROJECTS: Project[] = [
   { 
     id: '01', 
+    title: 'VESNI STUDIO\'S', 
+    techStack: 'AUDIO ENGINE • WEB STACK', 
+    tags: ['Music', 'Discography', 'Studio'],
+    year: '2025',
+    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1000&auto=format&fit=crop',
+    description: 'The central hub for all original music produced by Vesni. Features a high-fidelity interface to explore tracks, albums, and industrial soundscapes.',
+    link: 'https://vesnistudios.vercel.app/'
+  },
+  { 
+    id: '02', 
     title: 'SILKY WAY', 
     techStack: 'NEXT.JS • FIREBASE • CHAT', 
     tags: ['Marketplace', 'Real-time', 'E-commerce'],
@@ -53,7 +64,7 @@ const PROJECTS: Project[] = [
     link: 'https://silky-way.vercel.app/#/'
   },
   { 
-    id: '02', 
+    id: '03', 
     title: 'VESNI OS', 
     techStack: 'VANILLA JS • CSS3 • KERNEL', 
     tags: ['Web OS', 'UI/UX', 'System Sim'],
@@ -63,7 +74,7 @@ const PROJECTS: Project[] = [
     link: 'https://vesni-os.vercel.app/'
   },
   { 
-    id: '03', 
+    id: '04', 
     title: 'CYBER OS', 
     techStack: 'REACT • SIMULATION • HACKING', 
     tags: ['Hacking Game', 'Strategy', 'Multi-role'],
@@ -71,16 +82,6 @@ const PROJECTS: Project[] = [
     image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop',
     description: 'A strategic hacking simulator. Choose between White Hat or Black Hat roles to either compromise secure systems or defend against incoming threats.',
     link: 'https://hacksim.vercel.app/'
-  },
-  { 
-    id: '04', 
-    title: 'LIFESTEAL\'26', 
-    techStack: 'COMMUNITY • NETWORKING', 
-    tags: ['Minecraft SMP', 'Gaming', 'Managed'],
-    year: '2024',
-    image: 'https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?q=80&w=1000&auto=format&fit=crop',
-    description: 'The official portal for the Lifesteal\'26 Minecraft SMP. Organized and managed by Vesni.',
-    link: 'https://lifesteal26.vercel.app/'
   },
   { 
     id: '05', 
@@ -94,23 +95,23 @@ const PROJECTS: Project[] = [
   },
   { 
     id: '06', 
-    title: 'PC26 CRICKET', 
-    techStack: 'JS • LOGIC • PHYSICS', 
-    tags: ['Functional Game', 'Sports', 'Viral'],
+    title: 'LIFESTEAL\'26', 
+    techStack: 'COMMUNITY • NETWORKING', 
+    tags: ['Minecraft SMP', 'Gaming', 'Managed'],
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=1000&auto=format&fit=crop',
-    description: 'High-performance cricket simulation with 400+ concurrent users at peak.',
-    link: 'https://pcwc.vercel.app/'
+    image: 'https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?q=80&w=1000&auto=format&fit=crop',
+    description: 'The official portal for the Lifesteal\'26 Minecraft SMP. Organized and managed by Vesni.',
+    link: 'https://lifesteal26.vercel.app/'
   }
 ];
 
 const ACHIEVEMENTS = [
-  { id: 'AC-01', title: 'Infra Breach', desc: 'Audited and audited educational network security.', icon: Shield, color: 'text-[#ff3333]', metric: 'SEC_AUDIT_PASS' },
-  { id: 'AC-02', title: 'P2 CEO', desc: 'Directing "Alpha 1" animation film.', icon: Film, color: 'text-blue-400', metric: 'ALPHA_1_V.1' },
-  { id: 'AC-03', title: 'SoundCloud 2K+', desc: '2000+ plays on original tracks.', icon: Music, color: 'text-[#00ffaa]', metric: 'AUD_GROWTH' },
-  { id: 'AC-04', title: 'OS Architect', desc: 'Built functional web kernels.', icon: Cpu, color: 'text-purple-400', metric: 'OS_KERNEL_V2' },
-  { id: 'AC-05', title: 'Football MVP', desc: 'Competitive athletic achievements.', icon: Trophy, color: 'text-[#ff3333]', metric: 'STRIKER_RANK' },
-  { id: 'AC-06', title: 'Game Logic', desc: 'Deployed viral functional games.', icon: Gamepad2, color: 'text-yellow-400', metric: 'LOGIC_SCALED' }
+  { id: 'AC-01', title: 'Infra Breach', desc: 'Successfully bypassed and audited educational network security protocols in a major school system.', icon: Shield, color: 'text-[#ff3333]', metric: 'VULN_DISCLOSURE' },
+  { id: 'AC-02', title: 'P2 CEO', desc: 'Director and CEO of P2 Productions, directing the upcoming animated film "Alpha 1".', icon: Film, color: 'text-blue-400', metric: 'FILM_DIR_STABLE' },
+  { id: 'AC-03', title: 'SoundCloud 2K+', desc: 'Amassed over 2,000+ plays across original tracks and industrial curated sets.', icon: Music, color: 'text-[#00ffaa]', metric: 'PLAYS_VERIFIED' },
+  { id: 'AC-04', title: 'OS Architect', desc: 'Designed and deployed functional web kernels including Vesni OS and Cyber OS.', icon: Cpu, color: 'text-purple-400', metric: 'KERNEL_ACTIVE' },
+  { id: 'AC-05', title: 'Football MVP', desc: 'Multiple competitive athletic accolades and trophies in high-level football leagues.', icon: Trophy, color: 'text-[#ff3333]', metric: 'STRIKER_LEAD' },
+  { id: 'AC-06', title: 'Logic Deployed', desc: 'Engineered viral functional games like PC26 Cricket with massive concurrent user bases.', icon: Gamepad2, color: 'text-yellow-400', metric: '400_ACTIVE_USERS' }
 ];
 
 const SOCIALS = [
