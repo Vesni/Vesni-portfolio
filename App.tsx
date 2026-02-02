@@ -4,711 +4,483 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { 
   Github, 
-  Linkedin, 
   Terminal, 
   Shield, 
   Cpu, 
   Code, 
   Menu, 
   X, 
-  ChevronLeft, 
+  ArrowRight,
   ChevronRight, 
   Gamepad2, 
   Trophy, 
   Mail,
   ExternalLink,
-  Music,
   Youtube,
-  Twitter,
   Instagram,
-  Disc 
+  Activity,
+  Layers,
+  Database,
+  Lock,
+  Music,
+  Film,
+  Zap,
+  Target,
+  Layout,
+  Monitor,
+  Smartphone,
+  Tablet as TabletIcon
 } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
 import CustomCursor from './components/CustomCursor';
 import ProjectCard from './components/ArtistCard'; 
-import Intro from './components/Intro';
 import { Project } from './types';
 
-// Portfolio Data
 const PROJECTS: Project[] = [
   { 
-    id: '1', 
-    title: 'PC26 (Paper Cricket)', 
-    techStack: 'JS • LocalStorage • Game Logic', 
-    tags: ['Game Dev', 'Top Project', '400+ Users'],
+    id: '01', 
+    title: 'SILKY WAY', 
+    techStack: 'NEXT.JS • FIREBASE • CHAT', 
+    tags: ['Marketplace', 'Real-time', 'E-commerce'],
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=1000&auto=format&fit=crop',
-    description: 'My top game with 400+ active users worldwide. A multiplayer cricket score simulator featuring a virtual coin toss system, friend invites, and complex score tracking logic. Designed to bring the classroom classic to the web.',
-    link: 'https://pcwc.vercel.app/'
+    image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1000&auto=format&fit=crop',
+    description: 'A comprehensive listing marketplace featuring integrated real-time chat functionality, secure user authentication, and high-performance product indexing.',
+    link: 'https://silky-way.vercel.app/#/'
   },
   { 
-    id: '2', 
-    title: 'Forca OS', 
-    techStack: 'HTML • CSS • JS', 
-    tags: ['Web OS', 'Simulation'],
+    id: '02', 
+    title: 'VESNI OS', 
+    techStack: 'VANILLA JS • CSS3 • KERNEL', 
+    tags: ['Web OS', 'UI/UX', 'System Sim'],
     year: '2024',
     image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop',
-    description: 'A web-based operating system simulation featuring draggable windows, terminal commands, and theme customization. Built entirely with vanilla JavaScript to demonstrate DOM manipulation mastery without frameworks.',
-    link: 'https://vercel.com/vesnis-projects'
+    description: 'A sophisticated web-based operating system. Includes a fully functional terminal, custom window manager, and native web-apps built on a vanilla JS kernel.',
+    link: 'https://vesni-os.vercel.app/'
   },
   { 
-    id: '3', 
-    title: 'Security Lab', 
-    techStack: 'Python • Burp Suite • Nmap', 
-    tags: ['Security', 'Ethical Hacking'],
-    year: '2025',
-    image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop',
-    description: 'A repository of sanitized CTF writeups and vulnerability reports from controlled lab environments. Includes methodology for directory discovery using gobuster and packet analysis with Wireshark.',
-    link: 'https://github.com/Vesni'
-  },
-  { 
-    id: '4', 
-    title: 'FB26 Tracker', 
-    techStack: 'PHP • SQL • Analytics', 
-    tags: ['Sports Tech', 'Full Stack'],
+    id: '03', 
+    title: 'CYBER OS', 
+    techStack: 'REACT • SIMULATION • HACKING', 
+    tags: ['Hacking Game', 'Strategy', 'Multi-role'],
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?q=80&w=1000&auto=format&fit=crop',
-    description: 'A football performance tracking application. Logs training sessions, matches goals, and generates heatmaps. Demonstrates full-stack CRUD capabilities and data visualization.',
-    link: 'https://github.com/Vesni'
+    image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop',
+    description: 'A strategic hacking simulator. Choose between White Hat or Black Hat roles to either compromise secure systems or defend against incoming threats.',
+    link: 'https://hacksim.vercel.app/'
   },
   { 
-    id: '5', 
-    title: 'Discord Tools', 
-    techStack: 'Node.js • API', 
-    tags: ['Bot Dev', 'Automation'],
-    year: '2023',
-    image: 'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?q=80&w=1000&auto=format&fit=crop',
-    description: 'Custom Discord bots and overlay tools for streamers. Handles server moderation, live stats, and automated alerts using the Discord API.'
+    id: '04', 
+    title: 'LIFESTEAL\'26', 
+    techStack: 'COMMUNITY • NETWORKING', 
+    tags: ['Minecraft SMP', 'Gaming', 'Managed'],
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?q=80&w=1000&auto=format&fit=crop',
+    description: 'The official portal for the Lifesteal\'26 Minecraft SMP. Organized and managed by Vesni.',
+    link: 'https://lifesteal26.vercel.app/'
   },
   { 
-    id: '6', 
-    title: 'Music Editor', 
-    techStack: 'Audio Engineering', 
-    tags: ['Creative', 'Audio'],
-    year: '2023',
-    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1000&auto=format&fit=crop',
-    description: 'Portfolio of sound design and music editing work. Showcasing the creative side of technical production.',
-    link: 'https://soundcloud.com/vesni-lanus'
+    id: '05', 
+    title: 'P2 PRODUCTIONS', 
+    techStack: 'CREATIVE • FILM • DIRECTING', 
+    tags: ['Alpha 1', 'Animation', 'Studio'],
+    year: '2025',
+    image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1000&auto=format&fit=crop',
+    description: 'CEO, Founder, and Director Vesni leads the production of the highly anticipated upcoming animated film "Alpha 1".',
+    link: 'https://p2-productions.vercel.app/'
   },
+  { 
+    id: '06', 
+    title: 'PC26 CRICKET', 
+    techStack: 'JS • LOGIC • PHYSICS', 
+    tags: ['Functional Game', 'Sports', 'Viral'],
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?q=80&w=1000&auto=format&fit=crop',
+    description: 'High-performance cricket simulation with 400+ concurrent users at peak.',
+    link: 'https://pcwc.vercel.app/'
+  }
 ];
 
-const SKILLS = {
-  mastered: ['HTML5', 'CSS3 / Tailwind', 'JavaScript ES6+', 'PHP'],
-  intermediate: ['Python', 'SQL / MySQL', 'Git / GitHub', 'Ethical Hacking'],
-  tools: ['Burp Suite', 'Nmap', 'Wireshark', 'Gobuster', 'VS Code']
-};
+const ACHIEVEMENTS = [
+  { id: 'AC-01', title: 'Infra Breach', desc: 'Audited and audited educational network security.', icon: Shield, color: 'text-[#ff3333]', metric: 'SEC_AUDIT_PASS' },
+  { id: 'AC-02', title: 'P2 CEO', desc: 'Directing "Alpha 1" animation film.', icon: Film, color: 'text-blue-400', metric: 'ALPHA_1_V.1' },
+  { id: 'AC-03', title: 'SoundCloud 2K+', desc: '2000+ plays on original tracks.', icon: Music, color: 'text-[#00ffaa]', metric: 'AUD_GROWTH' },
+  { id: 'AC-04', title: 'OS Architect', desc: 'Built functional web kernels.', icon: Cpu, color: 'text-purple-400', metric: 'OS_KERNEL_V2' },
+  { id: 'AC-05', title: 'Football MVP', desc: 'Competitive athletic achievements.', icon: Trophy, color: 'text-[#ff3333]', metric: 'STRIKER_RANK' },
+  { id: 'AC-06', title: 'Game Logic', desc: 'Deployed viral functional games.', icon: Gamepad2, color: 'text-yellow-400', metric: 'LOGIC_SCALED' }
+];
 
 const SOCIALS = [
-  { name: 'GitHub', icon: Github, url: 'https://github.com/Vesni' },
-  { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/@NotebookLMgoogl' },
+  { name: 'Github', icon: Github, url: 'https://github.com/Vesni' },
+  { name: 'Youtube', icon: Youtube, url: 'https://www.youtube.com/@NotebookLMgoogl' },
   { name: 'Discord', icon: Gamepad2, url: 'https://discord.gg/tZE7WEkyhH' },
-  { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/https.vesni/' },
-  { name: 'Twitter', icon: Twitter, url: 'https://x.com/NextYTreal' },
-  { name: 'SoundCloud', icon: Disc, url: 'https://soundcloud.com/vesni-lanus' },
-  { name: 'Vercel', icon: Code, url: 'https://vercel.com/vesnis-projects' }
+  { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/https.vesni/' }
 ];
 
 const App: React.FC = () => {
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  // Increased threshold from 0.2 to 0.5 so text stays visible longer during scroll
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]); 
-  
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [activeTab, setActiveTab] = useState('tech');
-  const [showIntro, setShowIntro] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'pc'>('pc');
 
-  // Prevent browser scroll restoration to ensure animations start from top
+  // Device Recognition Logic
   useEffect(() => {
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 768) setDeviceType('mobile');
+      else if (width < 1280) setDeviceType('tablet');
+      else setDeviceType('pc');
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-    // Force scroll to top when intro finishes to prevent "hidden" state
-    window.scrollTo(0, 0);
-  };
-
-  // Handle keyboard navigation for project modal
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!selectedProject) return;
-      if (e.key === 'ArrowLeft') navigateProject('prev');
-      if (e.key === 'ArrowRight') navigateProject('next');
-      if (e.key === 'Escape') setSelectedProject(null);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedProject]);
-
   const scrollToSection = (id: string) => {
-    setMobileMenuOpen(false);
+    setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      const headerOffset = 100;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
       window.scrollTo({
-        top: offsetPosition,
+        top: element.offsetTop - 80,
         behavior: 'smooth'
       });
     }
   };
 
-  const navigateProject = (direction: 'next' | 'prev') => {
-    if (!selectedProject) return;
-    const currentIndex = PROJECTS.findIndex(p => p.id === selectedProject.id);
-    let nextIndex;
-    if (direction === 'next') {
-      nextIndex = (currentIndex + 1) % PROJECTS.length;
-    } else {
-      nextIndex = (currentIndex - 1 + PROJECTS.length) % PROJECTS.length;
-    }
-    setSelectedProject(PROJECTS[nextIndex]);
-  };
-  
-  return (
-    <div className={`relative min-h-screen text-white selection:bg-[#4fb7b3] selection:text-black cursor-auto md:cursor-none font-sans ${showIntro ? 'overflow-hidden h-screen' : 'overflow-x-hidden'}`}>
-      <CustomCursor />
-      <FluidBackground />
-      
-      {/* Intro Animation Overlay */}
-      <AnimatePresence>
-        {showIntro && <Intro onComplete={handleIntroComplete} />}
-      </AnimatePresence>
-
-      
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-8 py-6 mix-blend-difference">
-        <div className="font-heading text-xl md:text-2xl font-bold tracking-tighter text-white cursor-default z-50 flex items-center gap-2">
-          <Terminal className="w-6 h-6" /> VESNI
-        </div>
-        
-        {/* Desktop Menu */}
-        <div className="hidden md:flex gap-10 text-sm font-bold tracking-widest uppercase">
-          {['Projects', 'About', 'Services', 'Contact'].map((item) => (
-            <button 
-              key={item} 
-              onClick={() => scrollToSection(item.toLowerCase())}
-              className="hover:text-[#a8fbd3] transition-colors text-white cursor-pointer bg-transparent border-none"
-              data-hover="true"
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+  const NavItems = () => (
+    <>
+      {['Projects', 'Achievements', 'About', 'Contact'].map((item) => (
         <button 
-          onClick={() => scrollToSection('contact')}
-          className="hidden md:inline-flex items-center gap-2 border border-white px-6 py-3 text-xs font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-300 text-white cursor-pointer bg-transparent"
+          key={item} 
+          onClick={() => scrollToSection(item.toLowerCase())}
+          className="relative group transition-colors uppercase font-mono tracking-widest text-[10px] hover:text-[#00ffaa]"
           data-hover="true"
         >
-          <Mail className="w-4 h-4" /> Hire Me
+          <span className="hidden lg:inline opacity-0 group-hover:opacity-100 mr-2">[</span>
+          {item}
+          <span className="hidden lg:inline opacity-0 group-hover:opacity-100 ml-2">]</span>
         </button>
+      ))}
+    </>
+  );
 
-        {/* Mobile Menu Toggle */}
-        <button 
-          className="md:hidden text-white z-50 relative w-10 h-10 flex items-center justify-center"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-           {mobileMenuOpen ? <X /> : <Menu />}
-        </button>
-      </nav>
+  return (
+    <div className="relative min-h-screen bg-[#050505] text-white selection:bg-[#00ffaa] selection:text-black font-sans crt-overlay overflow-x-hidden">
+      <CustomCursor />
+      <FluidBackground />
 
-      {/* Mobile Menu Overlay */}
+      {/* 1. PC NAVIGATION (TOP) */}
       <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-30 bg-[#31326f]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
+        {deviceType === 'pc' && (
+          <motion.nav 
+            initial={{ y: -100 }} animate={{ y: 0 }}
+            className="fixed top-0 left-0 right-0 z-[100] px-12 py-8 flex justify-between items-center mix-blend-difference"
           >
-            {['Projects', 'About', 'Services', 'Contact'].map((item) => (
-              <button
-                key={item}
+            <div className="flex items-center gap-4 cursor-pointer" data-hover="true">
+              <div className="w-10 h-10 bg-[#00ffaa] flex items-center justify-center text-black font-black">
+                <Terminal className="w-6 h-6" />
+              </div>
+              <span className="font-heading text-xl font-black tracking-tighter">VESNI.SYS</span>
+            </div>
+            <div className="flex items-center gap-12">
+              <NavItems />
+              <div className="flex items-center gap-2 text-[9px] font-mono opacity-40 ml-8 border-l border-white/10 pl-8">
+                <Monitor className="w-3 h-3" /> PC_OPTIMIZED
+              </div>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
+      {/* 2. TABLET NAVIGATION (SIDEBAR) */}
+      <AnimatePresence>
+        {deviceType === 'tablet' && (
+          <motion.nav 
+            initial={{ x: -100 }} animate={{ x: 0 }}
+            className="fixed top-0 left-0 bottom-0 w-20 z-[100] bg-black/50 backdrop-blur-xl border-r border-white/5 flex flex-col items-center py-12 gap-12"
+          >
+            <div className="w-12 h-12 bg-[#00ffaa] flex items-center justify-center text-black font-black mb-8">
+              <Terminal className="w-6 h-6" />
+            </div>
+            <div className="flex flex-col gap-12 items-center flex-1 justify-center">
+              {['Projects', 'Achievements', 'About', 'Contact'].map(item => (
+                <button 
+                  key={item} 
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className="rotate-90 origin-center text-[10px] font-mono tracking-[0.3em] uppercase text-white/40 hover:text-[#00ffaa] whitespace-nowrap"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+            <div className="text-[#00ffaa] opacity-40">
+              <TabletIcon size={20} />
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
+      {/* 3. MOBILE NAVIGATION (TOP STICKY) */}
+      <AnimatePresence>
+        {deviceType === 'mobile' && (
+          <motion.nav 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="fixed top-0 left-0 right-0 z-[100] bg-black/80 backdrop-blur-md px-6 py-4 flex justify-between items-center border-b border-white/10"
+          >
+             <span className="font-heading text-sm font-black tracking-tighter text-[#00ffaa]">VESNI.SYS</span>
+             <div className="flex items-center gap-4">
+               <span className="text-[8px] font-mono text-white/30 uppercase"><Smartphone className="inline w-3 h-3 mb-1" /> MOBILE_HUD</span>
+               <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10">
+                 {isMobileMenuOpen ? <X size={18}/> : <Menu size={18}/>}
+               </button>
+             </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            className="fixed inset-0 z-[95] bg-black flex flex-col items-center justify-center gap-8 p-12"
+          >
+            {['Projects', 'Achievements', 'About', 'Contact'].map(item => (
+              <button 
+                key={item} 
                 onClick={() => scrollToSection(item.toLowerCase())}
-                className="text-4xl font-heading font-bold text-white hover:text-[#a8fbd3] transition-colors uppercase bg-transparent border-none"
+                className="text-4xl font-heading font-black hover:text-[#00ffaa] uppercase tracking-tighter"
               >
                 {item}
               </button>
             ))}
-            <div className="absolute bottom-10 flex gap-6">
-               <Github className="text-white/50" />
-               <Linkedin className="text-white/50" />
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* HERO SECTION */}
-      <header className="relative h-[100svh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden px-4">
-        <motion.div 
-          style={{ y, opacity }}
-          className="z-10 text-center flex flex-col items-center w-full max-w-6xl pb-24 md:pb-20"
-        >
-           {/* Chips */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={!showIntro ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="flex flex-wrap justify-center items-center gap-3 md:gap-4 text-[10px] md:text-sm font-mono text-[#a8fbd3] tracking-widest uppercase mb-4"
+      <main className={`${deviceType === 'tablet' ? 'pl-20' : ''}`}>
+        {/* HERO SECTION - Adaptive */}
+        <section className={`relative min-h-screen flex flex-col items-center justify-center px-6 md:px-20 ${deviceType === 'pc' ? 'items-center text-center' : 'items-start text-left'}`}>
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="z-10 w-full max-w-[1400px]"
           >
-            <span className="bg-black/40 px-3 py-1 rounded-full border border-[#4fb7b3]/30 backdrop-blur-sm flex items-center gap-2">
-              <Code className="w-3 h-3" /> Full-Stack Dev
-            </span>
-            <span className="bg-black/40 px-3 py-1 rounded-full border border-[#4fb7b3]/30 backdrop-blur-sm flex items-center gap-2">
-              <Shield className="w-3 h-3" /> Ethical Pen-Tester
-            </span>
-            <span className="bg-black/40 px-3 py-1 rounded-full border border-[#4fb7b3]/30 backdrop-blur-sm flex items-center gap-2">
-              <Trophy className="w-3 h-3" /> Footballer
-            </span>
-          </motion.div>
-
-          {/* Main Title - Wrapped in separate motion div for entrance animation */}
-          <div className="relative w-full flex justify-center items-center">
-            <motion.div
-               initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
-               animate={!showIntro ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
-               transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-               className="relative z-20"
-            >
-              <GradientText 
-                text="VESNI" 
-                as="h1" 
-                className="text-[18vw] md:text-[16vw] leading-[0.8] font-black tracking-tighter text-center" 
-              />
-            </motion.div>
+            <div className={`flex items-center gap-3 mb-8 bg-[#00ffaa]/5 border border-[#00ffaa]/20 px-4 py-1.5 w-fit font-mono text-[9px] tracking-widest text-[#00ffaa] ${deviceType === 'pc' ? 'mx-auto' : ''}`}>
+              <Activity size={12} className="animate-pulse" /> SYSTEM_ENCRYPTED_OS_V.2.5
+            </div>
             
-            <motion.div 
-               className="absolute -z-20 w-[50vw] h-[50vw] bg-[#4fb7b3]/10 blur-[60px] rounded-full pointer-events-none"
-               animate={{ scale: [0.9, 1.1, 0.9], opacity: [0.2, 0.4, 0.2] }}
-               transition={{ duration: 5, repeat: Infinity }}
+            <GradientText 
+              text="VESNI" 
+              className={`leading-none mb-10 select-none tracking-tighter
+                ${deviceType === 'mobile' ? 'text-[30vw]' : deviceType === 'tablet' ? 'text-[22vw]' : 'text-[18vw]'}
+              `} 
             />
-          </div>
-          
-          <motion.div
-             initial={{ scaleX: 0 }}
-             animate={!showIntro ? { scaleX: 1 } : {}}
-             transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
-             className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-[#a8fbd3] to-transparent mt-4 md:mt-8 mb-6 md:mb-8"
-          />
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={!showIntro ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.8, duration: 1 }}
-            className="text-base md:text-xl font-light max-w-2xl mx-auto text-gray-300 leading-relaxed px-4"
-          >
-             Mastered HTML • CSS • JS • PHP · Intermediate Python · Ethical Security Research · Team player on and off the pitch.
-          </motion.p>
-          
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={!showIntro ? { opacity: 1 } : {}}
-            transition={{ delay: 1.2, duration: 1 }}
-            className="flex gap-4 mt-8"
-          >
-            <button onClick={() => scrollToSection('projects')} className="bg-[#4fb7b3] text-black px-8 py-3 font-bold uppercase tracking-widest text-xs hover:bg-white transition-colors" data-hover="true">View Work</button>
-            <button onClick={() => scrollToSection('contact')} className="border border-white/30 text-white px-8 py-3 font-bold uppercase tracking-widest text-xs hover:bg-white/10 transition-colors" data-hover="true">Contact</button>
+            <p className={`font-mono uppercase tracking-[0.3em] text-white/40 mb-12 max-w-2xl ${deviceType === 'pc' ? 'mx-auto' : ''} ${deviceType === 'mobile' ? 'text-[10px]' : 'text-sm'}`}>
+              Full-Stack Architect // Ethical Pen-Tester // Director of Alpha 1
+            </p>
+
+            <div className={`flex flex-wrap gap-4 ${deviceType === 'pc' ? 'justify-center' : 'justify-start'}`}>
+               <button 
+                onClick={() => scrollToSection('projects')}
+                className="bg-[#00ffaa] text-black px-10 py-4 font-black text-[10px] tracking-[0.3em] uppercase hover:scale-105 transition-transform"
+                data-hover="true"
+               >
+                 Execute_Access
+               </button>
+               <button 
+                onClick={() => scrollToSection('contact')}
+                className="border border-white/20 text-white px-10 py-4 font-black text-[10px] tracking-[0.3em] uppercase hover:bg-white/5 transition-all"
+                data-hover="true"
+               >
+                 Contact_Protocol
+               </button>
+            </div>
           </motion.div>
-        </motion.div>
 
-        {/* MARQUEE */}
-        <div className="absolute bottom-12 md:bottom-16 left-0 w-full py-3 md:py-4 bg-white text-black z-20 overflow-hidden border-y-4 border-black shadow-[0_0_40px_rgba(255,255,255,0.2)]">
-          <motion.div 
-            className="flex w-fit will-change-transform"
-            animate={{ x: "-50%" }}
-            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-          >
-            {[0, 1].map((key) => (
-              <div key={key} className="flex whitespace-nowrap shrink-0">
-                {[...Array(3)].map((_, i) => (
-                  <span key={i} className="text-2xl md:text-5xl font-heading font-black px-8 flex items-center gap-4">
-                    WEB DEVELOPMENT <span className="text-[#4fb7b3] text-xl md:text-3xl">●</span> 
-                    ETHICAL HACKING <span className="text-[#4fb7b3] text-xl md:text-3xl">●</span> 
-                    FOOTBALL <span className="text-[#4fb7b3] text-xl md:text-3xl">●</span> 
-                    GAMING <span className="text-[#4fb7b3] text-xl md:text-3xl">●</span>
-                  </span>
+          {/* PC Layout HUD Elements */}
+          {deviceType === 'pc' && (
+            <>
+              <div className="absolute top-1/2 left-12 -translate-y-1/2 flex flex-col gap-8 opacity-20">
+                <div className="w-1 h-32 bg-white/10 relative overflow-hidden">
+                   <motion.div 
+                    className="absolute top-0 left-0 w-full bg-[#00ffaa]" 
+                    animate={{ height: ['0%', '100%', '0%'] }} 
+                    transition={{ duration: 4, repeat: Infinity }}
+                   />
+                </div>
+                <span className="rotate-90 font-mono text-[8px] tracking-[0.5em] text-white">X-COORD_882</span>
+              </div>
+              <div className="absolute bottom-12 right-12 text-right opacity-20 font-mono text-[8px] space-y-2">
+                <p>LATENCY: 14MS</p>
+                <p>UID: {Math.random().toString(36).substring(7).toUpperCase()}</p>
+              </div>
+            </>
+          )}
+        </section>
+
+        {/* PROJECTS SECTION - Adaptive Grid */}
+        <section id="projects" className="py-32 px-6 md:px-20 bg-black relative">
+          <div className="max-w-[1600px] mx-auto">
+            <header className="mb-24 flex flex-col md:flex-row justify-between items-baseline gap-8 border-b border-white/5 pb-12">
+               <h2 className={`font-heading font-black leading-none ${deviceType === 'mobile' ? 'text-6xl' : 'text-8xl'}`}>THE <span className="text-[#00ffaa]">VAULT</span></h2>
+               <div className="font-mono text-[10px] text-white/30 tracking-widest uppercase text-right">Records_Found: {PROJECTS.length}</div>
+            </header>
+            
+            <div className={`grid gap-6 ${
+              deviceType === 'mobile' ? 'grid-cols-1' : 
+              deviceType === 'tablet' ? 'grid-cols-2' : 
+              'grid-cols-2 lg:grid-cols-3'
+            }`}>
+              {PROJECTS.map((project) => (
+                <ProjectCard key={project.id} project={project} onClick={() => setSelectedProject(project)} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ACHIEVEMENTS - Adaptive Layout */}
+        <section id="achievements" className="py-32 px-6 md:px-20 bg-[#0a0a0b] border-t border-white/5">
+           <div className="max-w-[1600px] mx-auto">
+              <div className="flex items-center gap-4 mb-20 text-[#ff3333]">
+                <Zap size={20} />
+                <h2 className={`font-heading font-black uppercase tracking-tight ${deviceType === 'mobile' ? 'text-4xl' : 'text-6xl'}`}>Key_Milestones</h2>
+              </div>
+              
+              <div className={`grid gap-1 ${
+                deviceType === 'mobile' ? 'grid-cols-1' : 
+                deviceType === 'tablet' ? 'grid-cols-2' : 
+                'grid-cols-3'
+              }`}>
+                {ACHIEVEMENTS.map((ach) => (
+                  <div key={ach.id} className="p-10 md:p-14 bg-black/50 border border-white/5 hover:border-[#00ffaa]/30 transition-all group">
+                    <div className={`${ach.color} mb-8 flex justify-between`}>
+                      <ach.icon size={deviceType === 'mobile' ? 32 : 48} />
+                      <span className="font-mono text-[10px] opacity-20">{ach.id}</span>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-heading font-black mb-4 uppercase group-hover:text-[#00ffaa] transition-colors">{ach.title}</h3>
+                    <p className="text-white/40 text-sm mb-8 leading-relaxed font-light">{ach.desc}</p>
+                    <div className="pt-6 border-t border-white/5 flex items-center justify-between">
+                       <span className="font-mono text-[9px] text-[#00ffaa] tracking-widest">{ach.metric}</span>
+                       <Target className="w-3 h-3 text-white/20" />
+                    </div>
+                  </div>
                 ))}
               </div>
-            ))}
-          </motion.div>
-        </div>
-      </header>
+           </div>
+        </section>
 
-      {/* PROJECTS SECTION (Formerly Lineup) */}
-      <section id="projects" className="relative z-10 py-20 md:py-32">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 px-4">
-             <h2 className="text-5xl md:text-8xl font-heading font-bold uppercase leading-[0.9] drop-shadow-lg break-words w-full md:w-auto">
-              Select <br/> 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a8fbd3] to-[#4fb7b3]">Projects</span>
-            </h2>
-             <div className="hidden md:block text-right">
-               <p className="text-gray-400 font-mono text-sm tracking-widest">
-                 /// SYSTEM.PROJECTS.LOAD()<br/>
-                 STATUS: ONLINE
-               </p>
-             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-white/10 bg-black/20 backdrop-blur-sm">
-            {PROJECTS.map((project) => (
-              <ProjectCard key={project.id} project={project} onClick={() => setSelectedProject(project)} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ABOUT & SKILLS SECTION (Formerly Experience) */}
-      <section id="about" className="relative z-10 py-20 md:py-32 bg-black/40 backdrop-blur-sm border-t border-white/10 overflow-hidden">
-        <div className="absolute top-1/2 right-[-20%] w-[50vw] h-[50vw] bg-[#637ab9]/20 rounded-full blur-[40px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 items-start">
-            
-            {/* Left Col: Bio */}
-            <div className="lg:col-span-6">
-              <h2 className="text-4xl md:text-7xl font-heading font-bold mb-8 leading-tight">
-                WHO IS <br/> <GradientText text="VESNI?" className="text-5xl md:text-8xl" />
-              </h2>
-              <div className="prose prose-invert prose-lg text-gray-300 font-light leading-relaxed mb-10">
-                <p className="mb-6">
-                  I’m a results-first <span className="text-[#a8fbd3] font-bold">web developer</span> and <span className="text-[#a8fbd3] font-bold">ethical security researcher</span> who ships clean, battle-tested sites and runs hands-on security assessments in controlled environments.
-                </p>
-                <p>
-                  Off keyboard, I have a captain-level mindset on the football pitch and compete in gaming. I build small tools, experiment with new tech, and follow strict responsible-disclosure practices for any security work.
-                </p>
-              </div>
-
-              {/* Interests Tabs */}
-              <div className="flex gap-6 border-b border-white/10 pb-4 mb-6">
-                <button 
-                  onClick={() => setActiveTab('tech')}
-                  className={`text-sm font-bold tracking-widest uppercase pb-2 transition-colors ${activeTab === 'tech' ? 'text-white border-b-2 border-[#4fb7b3]' : 'text-gray-500 hover:text-white'}`}
-                >
-                  Tech
-                </button>
-                <button 
-                  onClick={() => setActiveTab('life')}
-                  className={`text-sm font-bold tracking-widest uppercase pb-2 transition-colors ${activeTab === 'life' ? 'text-white border-b-2 border-[#4fb7b3]' : 'text-gray-500 hover:text-white'}`}
-                >
-                  Life
-                </button>
-              </div>
-
-              {activeTab === 'tech' ? (
-                 <div className="space-y-4">
-                   <div className="flex items-center gap-4 text-gray-300"><Code className="text-[#4fb7b3]"/> Google Developer Badge Holder</div>
-                   <div className="flex items-center gap-4 text-gray-300"><Github className="text-[#4fb7b3]"/> Open Source Contributor</div>
-                   <div className="flex items-center gap-4 text-gray-300"><Cpu className="text-[#4fb7b3]"/> Active Discord Developer: <strong>ethical_vesni</strong></div>
-                 </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4 text-gray-300"><Trophy className="text-[#4fb7b3]"/> 
-                    <a href="https://cricheroes.com/player-profile/43662014/vesni/matches" target="_blank" rel="noopener noreferrer" className="hover:text-[#a8fbd3] underline underline-offset-4">
-                      Official ICA Box Cricket Player
-                    </a>
+        {/* ABOUT SECTION */}
+        <section id="about" className="py-32 px-6 md:px-20 bg-[#050505] overflow-hidden">
+          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
+            <div className="space-y-12">
+               <h2 className={`font-heading font-black leading-tight ${deviceType === 'mobile' ? 'text-5xl' : 'text-7xl'}`}>IDENTITY_ <br/> <span className="text-[#00ffaa]">VERIFIED.</span></h2>
+               <div className="text-lg md:text-xl font-light text-white/60 leading-relaxed space-y-6">
+                 <p>I am <span className="text-white font-bold underline decoration-[#00ffaa]">VESNI</span>. Multimedia architect and ethical security researcher.</p>
+                 <p>Leading <span className="text-white font-bold">P2 Productions</span>, I bridge the gap between complex backend security and high-fidelity front-end storytelling.</p>
+               </div>
+               <div className="flex gap-4">
+                  <div className="px-6 py-4 bg-white/5 border border-white/10">
+                     <span className="block font-mono text-[8px] text-white/30 mb-2 uppercase tracking-widest">Football_Rank</span>
+                     <span className="text-2xl font-heading font-bold">STRIKER</span>
                   </div>
-                  <div className="flex items-center gap-4 text-gray-300"><Gamepad2 className="text-[#4fb7b3]"/> Competitive Gamer</div>
-                  <div className="flex items-center gap-4 text-gray-300"><Music className="text-[#4fb7b3]"/> Music Editor</div>
-                </div>
-              )}
-            </div>
-
-            {/* Right Col: Skills Visualizer */}
-            <div className="lg:col-span-6 bg-[#1a1b3b]/50 p-8 rounded-3xl border border-white/10 backdrop-blur-md">
-              <h3 className="text-2xl font-heading font-bold mb-8 flex items-center gap-2">
-                <Terminal className="text-[#4fb7b3]" /> Skill Matrix
-              </h3>
-              
-              <div className="space-y-8">
-                <div>
-                  <h4 className="text-xs text-gray-400 uppercase tracking-widest mb-3">Mastered Core</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {SKILLS.mastered.map(skill => (
-                      <span key={skill} className="bg-[#4fb7b3] text-black px-3 py-1 font-bold text-sm rounded-md">{skill}</span>
-                    ))}
+                  <div className="px-6 py-4 bg-white/5 border border-white/10">
+                     <span className="block font-mono text-[8px] text-white/30 mb-2 uppercase tracking-widest">Plays_Soundcloud</span>
+                     <span className="text-2xl font-heading font-bold">2K+</span>
                   </div>
-                </div>
-
-                <div>
-                  <h4 className="text-xs text-gray-400 uppercase tracking-widest mb-3">Intermediate / Learning</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {SKILLS.intermediate.map(skill => (
-                      <span key={skill} className="bg-white/10 text-white border border-white/10 px-3 py-1 text-sm rounded-md">{skill}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                   <h4 className="text-xs text-gray-400 uppercase tracking-widest mb-3">Security Tools (Ethical Use Only)</h4>
-                   <div className="grid grid-cols-2 gap-3">
-                      {SKILLS.tools.map(tool => (
-                        <div key={tool} className="flex items-center gap-2 text-sm text-gray-300 bg-black/20 p-2 rounded">
-                          <div className="w-1.5 h-1.5 bg-red-400 rounded-full" /> {tool}
-                        </div>
-                      ))}
-                   </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES / CONTACT SECTION (Formerly Tickets) */}
-      <section id="services" className="relative z-10 py-20 md:py-32 px-4 md:px-6 bg-black/30 backdrop-blur-lg">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12 md:mb-20">
-             <h2 className="text-5xl md:text-9xl font-heading font-bold opacity-20 text-white">
-               DEPLOY
-             </h2>
-             <p className="text-[#a8fbd3] font-mono uppercase tracking-widest -mt-3 md:-mt-8 relative z-10 text-sm md:text-base">
-               Ready to start your project?
-             </p>
-          </div>
-          
-          <div id="contact" className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { 
-                title: 'Web Dev', 
-                desc: 'Fast, responsive, and accessible websites built with modern standards.', 
-                icon: Code,
-                features: ['Custom Frontend', 'PHP Backend', 'SEO Friendly'],
-                action: 'View Projects',
-                link: 'projects'
-              },
-              { 
-                title: 'Security Audit', 
-                desc: 'Vulnerability assessments and hardening for your web applications.', 
-                icon: Shield,
-                features: ['Penetration Testing', 'Report Writing', 'Remediation'],
-                action: 'Request Audit',
-                link: 'mailto:vesni277@gmail.com?subject=Security%20Audit'
-              },
-              { 
-                title: 'Collaboration', 
-                desc: 'Looking for a teammate? I bring leadership from the pitch to the repo.', 
-                icon: Trophy,
-                features: ['Open Source', 'Team Leadership', 'Mentorship'],
-                action: '', // Placeholder
-                link: '', // Placeholder
-                buttons: [
-                   { label: 'Email', sub: '(Longer Wait)', link: 'mailto:vesni277@gmail.com?subject=Collaboration' },
-                   { label: 'Instagram', sub: '(Faster Reply)', link: 'https://www.instagram.com/https.vesni/' }
-                ]
-              },
-            ].map((card, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ y: -10 }}
-                className="relative p-8 md:p-10 border border-white/10 backdrop-blur-md flex flex-col min-h-[400px] bg-gradient-to-b from-white/5 to-transparent transition-colors hover:border-[#4fb7b3]/50 group"
-              >
-                <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity text-[#4fb7b3]">
-                   <card.icon className="w-12 h-12" />
-                </div>
-                
-                <h3 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-white">{card.title}</h3>
-                <p className="text-gray-400 mb-8 h-20">{card.desc}</p>
-                
-                <ul className="space-y-4 mb-auto">
-                  {card.features.map(f => (
-                    <li key={f} className="flex items-center gap-3 text-sm text-gray-200">
-                      <span className="w-1 h-1 bg-[#4fb7b3] rounded-full" /> {f}
-                    </li>
-                  ))}
-                </ul>
-                
-                {card.buttons ? (
-                   <div className="mt-8 flex flex-col gap-3 w-full">
-                      {card.buttons.map((btn, idx) => (
-                        <a 
-                           key={idx}
-                           href={btn.link}
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           className="w-full py-3 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-widest border border-white/20 hover:bg-white hover:text-black transition-all text-center"
-                           data-hover="true"
-                        >
-                           {btn.label} <span className="opacity-60 text-[10px] normal-case tracking-normal whitespace-nowrap">{btn.sub}</span>
-                        </a>
-                      ))}
-                   </div>
-                ) : (
-                    <a 
-                      href={card.link.startsWith('http') || card.link.startsWith('mailto') ? card.link : `#${card.link}`}
-                      onClick={(e) => {
-                        if (!card.link.startsWith('http') && !card.link.startsWith('mailto')) {
-                           e.preventDefault();
-                           scrollToSection(card.link);
-                        }
-                      }}
-                      className="w-full py-4 mt-8 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-[0.2em] border border-white/20 hover:bg-white hover:text-black transition-all"
-                      data-hover="true"
-                    >
-                      {card.action}
-                    </a>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <footer className="relative z-10 border-t border-white/10 py-12 md:py-16 bg-black/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12">
-            <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold tracking-tighter mb-4 text-white">VESNI</div>
-              <div className="text-sm text-gray-400 max-w-md">
-                 Building the future, securing the present.
-              </div>
-              <div className="mt-4 flex flex-wrap gap-3">
-                 {SOCIALS.map((social) => (
-                   <a 
-                    key={social.name} 
-                    href={social.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="p-2 border border-white/10 rounded-full hover:bg-white hover:text-black transition-colors group"
-                    title={social.name}
-                   >
-                     <social.icon className="w-5 h-5" />
-                   </a>
-                 ))}
-                 <a href="mailto:vesni277@gmail.com" className="p-2 border border-white/10 rounded-full hover:bg-white hover:text-black transition-colors" title="Email">
-                   <Mail className="w-5 h-5"/>
-                 </a>
-              </div>
+               </div>
             </div>
             
+            {/* Logic Matrix - PC/Tablet focus */}
+            {deviceType !== 'mobile' && (
+              <div className="bg-white/5 border border-white/10 p-12 backdrop-blur-3xl relative">
+                <div className="absolute top-0 right-0 w-20 h-20 border-t border-r border-[#00ffaa]/40 translate-x-4 -translate-y-4" />
+                <h3 className="font-heading font-bold mb-12 flex items-center gap-3 border-b border-white/5 pb-4 text-xl">
+                  <Cpu className="text-[#00ffaa]" /> SYSTEM_CAPABILITIES
+                </h3>
+                <div className="space-y-10">
+                  <div className="space-y-4">
+                    <span className="text-[9px] font-mono tracking-[0.5em] text-white/20 block">CORE_SYSTEMS</span>
+                    <div className="flex flex-wrap gap-2">
+                      {['HTML5', 'CSS3', 'JS', 'PHP'].map(s => <span key={s} className="bg-white text-black px-4 py-1.5 text-[10px] font-black">{s}</span>)}
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <span className="text-[9px] font-mono tracking-[0.5em] text-white/20 block">SEC_PROTOCOL</span>
+                    <div className="flex flex-wrap gap-2">
+                      {['NMAP', 'BURP', 'GHOST', 'ENCRYPTION'].map(s => <span key={s} className="border border-[#ff3333] text-[#ff3333] px-4 py-1.5 text-[10px] font-mono bg-[#ff3333]/5">{s}</span>)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
+        </section>
 
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between text-xs text-gray-500 font-mono gap-4">
-             <p>© 2025 Vesni. All rights reserved.</p>
-             <div className="max-w-xl text-right md:text-right text-justify opacity-60">
-                <strong>Responsible Disclosure:</strong> All security testing shown is performed in legal, controlled environments or with explicit permission. I do not condone illicit hacking. Contact me to report potential vulnerabilities.
-             </div>
+        {/* FOOTER */}
+        <footer id="contact" className="py-32 px-6 md:px-20 border-t border-white/5 bg-black">
+          <div className="max-w-7xl mx-auto text-center">
+            <h2 className={`font-heading font-black text-white/5 mb-24 select-none tracking-tighter ${deviceType === 'mobile' ? 'text-7xl' : 'text-[12vw]'}`}>TRANSMIT</h2>
+            <div className={`grid gap-4 mb-24 ${deviceType === 'mobile' ? 'grid-cols-2' : 'grid-cols-4'}`}>
+              {SOCIALS.map(s => (
+                <a key={s.name} href={s.url} target="_blank" className="p-10 border border-white/5 hover:border-[#00ffaa] hover:bg-[#00ffaa]/5 transition-all group" data-hover="true">
+                  <s.icon className="mx-auto mb-4 group-hover:text-[#00ffaa] group-hover:scale-110 transition-all" size={24} />
+                  <span className="font-mono text-[9px] tracking-widest uppercase text-white/40 group-hover:text-white">{s.name}</span>
+                </a>
+              ))}
+            </div>
+            <div className="pt-24 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 font-mono text-[9px] text-white/20 tracking-widest">
+               <span>// ARCHIVE_VESNI_PORTFOLIO</span>
+               <div className="flex gap-8">
+                 <span className="text-[#00ffaa]">STATUS: ACTIVE</span>
+                 <span>LAYOUT: {deviceType.toUpperCase()}</span>
+               </div>
+               <span>© 2025 ALL_RECORDS_LOCKED</span>
+            </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </main>
 
-      {/* Project Detail Modal */}
+      {/* Project Modal */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-auto"
+            className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 overflow-y-auto"
           >
-            <motion.div
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl bg-[#1a1b3b] border border-white/10 overflow-hidden flex flex-col md:flex-row shadow-2xl shadow-[#4fb7b3]/10 group/modal max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-colors"
-                data-hover="true"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              {/* Navigation Buttons */}
-              <button
-                onClick={(e) => { e.stopPropagation(); navigateProject('prev'); }}
-                className="absolute left-4 bottom-4 translate-y-0 md:top-1/2 md:bottom-auto md:-translate-y-1/2 z-20 p-3 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-colors border border-white/10 backdrop-blur-sm"
-                data-hover="true"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-
-              <button
-                onClick={(e) => { e.stopPropagation(); navigateProject('next'); }}
-                className="absolute right-4 bottom-4 translate-y-0 md:top-1/2 md:bottom-auto md:-translate-y-1/2 z-20 p-3 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-colors border border-white/10 backdrop-blur-sm md:right-8"
-                data-hover="true"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-
-              {/* Image Side */}
-              <div className="w-full md:w-1/2 h-64 md:h-auto relative overflow-hidden bg-black">
-                <AnimatePresence mode="wait">
-                  <motion.img 
-                    key={selectedProject.id}
-                    src={selectedProject.image} 
-                    alt={selectedProject.title} 
-                    initial={{ opacity: 0, scale: 1.1 }}
-                    animate={{ opacity: 0.8, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                </AnimatePresence>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1a1b3b] via-transparent to-transparent md:bg-gradient-to-r" />
-              </div>
-
-              {/* Content Side */}
-              <div className="w-full md:w-1/2 p-8 pb-24 md:p-12 flex flex-col justify-center relative">
-                <motion.div
-                  key={selectedProject.id}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
-                >
-                  <div className="flex items-center gap-3 text-[#4fb7b3] mb-4">
-                     <span className="font-mono text-sm tracking-widest uppercase border border-[#4fb7b3]/30 px-2 py-1 rounded">{selectedProject.year}</span>
-                     <span className="font-mono text-sm tracking-widest uppercase">{selectedProject.techStack}</span>
+             <motion.div
+              initial={{ scale: 0.95, y: 30 }} animate={{ scale: 1, y: 0 }}
+              className={`w-full max-w-6xl bg-[#0a0a0b] border border-white/10 flex flex-col shadow-[0_0_100px_rgba(0,0,0,1)] relative overflow-hidden ${deviceType === 'pc' ? 'md:flex-row' : ''}`}
+              onClick={e => e.stopPropagation()}
+             >
+                <button onClick={() => setSelectedProject(null)} className="absolute top-6 right-6 z-30 text-white/40 hover:text-white" data-hover="true">
+                  <X size={32} />
+                </button>
+                <div className={`${deviceType === 'pc' ? 'w-1/2' : 'w-full h-64'} bg-black relative`}>
+                  <img src={selectedProject.image} className="absolute inset-0 w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700" alt={selectedProject.title} />
+                  <div className="absolute inset-0 scanner-line opacity-20" />
+                </div>
+                <div className={`p-10 md:p-20 flex flex-col justify-center ${deviceType === 'pc' ? 'w-1/2' : 'w-full'}`}>
+                  <span className="text-[#00ffaa] font-mono text-[10px] tracking-widest mb-4 uppercase">Project_Rec: {selectedProject.id}</span>
+                  <h3 className="text-4xl md:text-6xl font-heading font-black mb-6 leading-none tracking-tighter uppercase">{selectedProject.title}</h3>
+                  <p className="text-white/50 mb-10 leading-relaxed font-light">{selectedProject.description}</p>
+                  <div className="flex flex-wrap gap-4 mb-10">
+                    {selectedProject.tags.map(t => <span key={t} className="text-[9px] font-mono border border-white/10 px-4 py-2 uppercase bg-white/5">{t}</span>)}
                   </div>
-                  
-                  <h3 className="text-4xl md:text-5xl font-heading font-bold uppercase leading-none mb-4 text-white">
-                    {selectedProject.title}
-                  </h3>
-                  
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {selectedProject.tags.map(tag => (
-                      <span key={tag} className="text-xs bg-white/10 px-2 py-1 rounded text-gray-300">{tag}</span>
-                    ))}
-                  </div>
-                  
-                  <div className="h-px w-20 bg-white/20 mb-6" />
-                  
-                  <p className="text-gray-300 leading-relaxed text-lg font-light mb-8">
-                    {selectedProject.description}
-                  </p>
-
                   {selectedProject.link && (
-                    <a 
-                      href={selectedProject.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="flex items-center gap-2 text-[#4fb7b3] font-bold tracking-widest uppercase text-sm hover:text-white transition-colors w-fit group-hover/link:translate-x-1" 
-                      data-hover="true"
-                    >
-                      View Code / Demo <ExternalLink className="w-4 h-4" />
+                    <a href={selectedProject.link} target="_blank" className="bg-white text-black px-10 py-4 text-[10px] font-black uppercase tracking-widest hover:bg-[#00ffaa] transition-colors text-center" data-hover="true">
+                      Initiate_Link
                     </a>
                   )}
-                </motion.div>
-              </div>
-            </motion.div>
+                </div>
+             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
