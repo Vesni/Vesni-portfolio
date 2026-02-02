@@ -23,9 +23,12 @@ const CustomCursor: React.FC = () => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
 
-      const target = e.target as HTMLElement;
-      const hovering = !!target.closest('[data-hover="true"]') || 
-                       ['button', 'a', 'input'].includes(target.tagName.toLowerCase());
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      const tagName = target.tagName?.toLowerCase() || '';
+      const hovering = !!target.closest?.('[data-hover="true"]') || 
+                       ['button', 'a', 'input', 'textarea'].includes(tagName);
 
       if (hovering !== isHoveringRef.current) {
         isHoveringRef.current = hovering;

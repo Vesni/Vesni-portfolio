@@ -11,8 +11,13 @@ interface IntroProps {
   onComplete: () => void;
 }
 
+interface LogLine {
+  text: string;
+  category: 'boot' | 'id' | 'prompt';
+}
+
 const Intro: React.FC<IntroProps> = ({ onComplete }) => {
-  const [lines, setLines] = useState<{ text: string; category: 'boot' | 'id' | 'prompt' }[]>([]);
+  const [lines, setLines] = useState<LogLine[]>([]);
   const [userInput, setUserInput] = useState('');
   const [isInteractive, setIsInteractive] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
@@ -57,11 +62,12 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      if (userInput.toLowerCase().trim() === 'start') {
+      const cmd = userInput.toLowerCase().trim();
+      if (cmd === 'start') {
         setIsExiting(true);
         setTimeout(onComplete, 800);
-      } else {
-        setLines(prev => [...prev, { text: `Invalid command: ${userInput}`, category: 'boot' }]);
+      } else if (cmd !== '') {
+        setLines(prev => [...prev, { text: `Invalid command: ${cmd}`, category: 'boot' }]);
         setUserInput('');
       }
     }
@@ -95,7 +101,7 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
           <div className="w-full max-w-lg space-y-1 md:space-y-2">
             {lines.map((line, i) => (
               <motion.div 
-                key={i}
+                key={`${i}-${line.text}`}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 className={`text-xs md:text-sm tracking-wider ${
@@ -131,7 +137,6 @@ const Intro: React.FC<IntroProps> = ({ onComplete }) => {
                   className="w-2 h-4 bg-[#00ffaa]"
                   animate={{ opacity: [0, 1, 0] }}
                   transition={{ repeat: Infinity, duration: 0.8 }}
-                  style={{ marginLeft: -userInput.length === 0 ? 0 : 0 }}
                 />
               </motion.div>
             )}
