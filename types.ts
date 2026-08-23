@@ -24,7 +24,10 @@ export interface ChatMessage {
 
 export enum Section {
   HERO = 'hero',
+  NARCOTICS = 'narcotics',
+  BANDS = 'bands',
   PROJECTS = 'projects',
+  ACHIEVEMENTS = 'achievements',
   ABOUT = 'about',
   CONTACT = 'contact',
 }

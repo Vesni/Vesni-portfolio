@@ -1,5 +1,6 @@
 {
   "name": "Vesni Portfolio",
-  "description": "Full-Stack Web Dev, Ethical Pen-Tester, Footballer, and Gamer Portfolio. Mastered HTML, CSS, JS, PHP.",
-  "requestFramePermissions": []
+  "description": "Portfolio of Vesni: Full-Stack Developer, Film Director (NARCOTICS), and Music Producer (BANDS).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -1,13 +1,13 @@
-
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
 
 import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Github, 
+  Linkedin,
   Terminal, 
   Shield, 
   Cpu, 
@@ -17,443 +17,630 @@ import {
   ArrowRight,
   ChevronRight, 
   Gamepad2, 
-  Trophy, 
   Mail,
   ExternalLink,
-  Youtube,
-  Instagram,
-  Activity,
-  Layers,
-  Database,
-  Lock,
   Music,
   Film,
-  Zap,
-  Target,
-  Monitor,
-  Smartphone,
-  Tablet as TabletIcon,
-  Crosshair,
-  BarChart3,
-  Dribbble,
-  Move
+  Flame,
+  Activity,
+  Layers,
+  Sparkles,
+  Move,
+  Radio,
+  Lock,
+  ChevronDown
 } from 'lucide-react';
-import FluidBackground from './components/FluidBackground';
-import GradientText from './components/GlitchText';
-import CustomCursor from './components/CustomCursor';
 import ProjectCard from './components/ArtistCard'; 
-import Intro from './components/Intro';
+import NarcoticsSection from './components/NarcoticsSection';
+import BandsSection from './components/BandsSection';
+import PageIntro from './components/PageIntro';
+import KaliModal from './components/KaliModal';
 import { Project } from './types';
 
 const PROJECTS: Project[] = [
   { 
     id: '01', 
-    title: 'VESNI STUDIO\'S', 
-    techStack: 'AUDIO ENGINE • WEB STACK', 
-    tags: ['Music', 'Discography', 'Studio'],
+    title: 'PULSE MESSENGER', 
+    techStack: 'WebSockets • Real-Time • Cloud Architecture', 
+    tags: ['Chat Platform', 'Real-Time Messaging', 'Web App'],
     year: '2025',
-    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1000&auto=format&fit=crop',
-    description: 'Central hub for all original music produced by Vesni. Features a high-fidelity interface to explore tracks, albums, and industrial soundscapes.',
-    link: 'https://vesnistudios.vercel.app/'
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop',
+    description: 'A modern, high-speed real-time chat platform engineered for instant messaging, private channels, and seamless cross-device communication.',
+    link: 'https://pulse-msg.vercel.app/'
   },
   { 
     id: '02', 
-    title: 'SILKY WAY', 
-    techStack: 'NEXT.JS • FIREBASE', 
-    tags: ['Marketplace', 'Chat', 'E-comm'],
-    year: '2024',
-    image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1000&auto=format&fit=crop',
-    description: 'A comprehensive listing marketplace featuring integrated real-time chat functionality, secure user authentication, and high-performance product indexing.',
-    link: 'https://silky-way.vercel.app/#/'
+    title: 'VESNI STUDIOS', 
+    techStack: 'Audio Engine • Web Stack', 
+    tags: ['Music', 'Studio', 'Discography'],
+    year: '2025',
+    image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1000&auto=format&fit=crop',
+    description: 'Central hub for original music produced by Vesni. Features a high-fidelity interface to explore albums, singles, and soundscapes.',
+    link: 'https://vesnistudios.vercel.app/'
   },
   { 
     id: '03', 
-    title: 'VESNI OS', 
-    techStack: 'JS • CSS3 • KERNEL', 
-    tags: ['Web OS', 'UI/UX', 'System Sim'],
+    title: 'SILKY WAY', 
+    techStack: 'Next.js • Firebase', 
+    tags: ['Marketplace', 'Real-time Chat', 'E-Commerce'],
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop',
-    description: 'A sophisticated web-based operating system. Includes a fully functional terminal, custom window manager, and native web-apps built on a vanilla JS kernel.',
-    link: 'https://vesni-os.vercel.app/'
+    image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=1000&auto=format&fit=crop',
+    description: 'A full-featured listing marketplace with real-time chat between buyers and sellers, user authentication, and responsive product indexing.',
+    link: 'https://silky-way.vercel.app/#/'
   },
   { 
     id: '04', 
-    title: 'CYBER OS', 
-    techStack: 'REACT • SIMULATION', 
-    tags: ['Hacking Game', 'Strategy'],
+    title: 'VESNI OS', 
+    techStack: 'JavaScript • CSS3 • Web Kernel', 
+    tags: ['Web OS', 'Window Manager', 'Interactive'],
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop',
-    description: 'A strategic hacking simulator. Choose between White Hat or Black Hat roles to either compromise secure systems or defend against incoming threats.',
-    link: 'https://hacksim.vercel.app/'
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop',
+    description: 'A web-based desktop operating system featuring a functional terminal, draggable window management, custom file system, and native web apps.',
+    link: 'https://vesni-os.vercel.app/'
   },
   { 
     id: '05', 
-    title: 'P2 PRODUCTIONS', 
-    techStack: 'FILM • DIRECTING', 
-    tags: ['Alpha 1', 'Studio', 'Animation'],
-    year: '2025',
-    image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1000&auto=format&fit=crop',
-    description: 'CEO, Founder, and Director Vesni leads the production of the highly anticipated upcoming animated film "Alpha 1".',
-    link: 'https://p2-productions.vercel.app/'
+    title: 'CYBER OS', 
+    techStack: 'React • Strategy Engine', 
+    tags: ['Hacking Game', 'Cybersecurity', 'Simulation'],
+    year: '2024',
+    image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop',
+    description: 'A strategic hacking simulation where players choose between White Hat defense and Black Hat offense to secure or breach simulated networks.',
+    link: 'https://hacksim.vercel.app/'
   },
   { 
     id: '06', 
     title: 'LIFESTEAL\'26', 
-    techStack: 'GAMING • NETWORKING', 
-    tags: ['SMP', 'Minecraft', 'Managed'],
+    techStack: 'Community Hub • Management Portal', 
+    tags: ['Minecraft', 'SMP', 'Community'],
     year: '2024',
     image: 'https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?q=80&w=1000&auto=format&fit=crop',
-    description: 'The official portal for the Lifesteal\'26 Minecraft SMP. Organized and managed by Vesni.',
+    description: 'The official portal for the Lifesteal\'26 Minecraft SMP server community. Organized and managed by Vesni.',
     link: 'https://lifesteal26.vercel.app/'
   }
 ];
 
 const ACHIEVEMENTS = [
-  { id: 'AC-01', title: 'Infra Auditor', desc: 'Securely audited educational infrastructure, exposing critical network bypasses.', icon: Shield, color: 'text-red-500', metric: 'EXPLOIT_PATCHED' },
-  { id: 'AC-02', title: 'Director Alpha', desc: 'Heading P2 Productions for the 2025 release of Alpha 1.', icon: Film, color: 'text-blue-500', metric: 'PHASE_03_READY' },
-  { id: 'AC-03', title: 'Stream Count', desc: 'Surpassed 2,000 unique plays on SoundCloud music releases.', icon: Music, color: 'text-green-400', metric: '2K_PLAYS_LOG' },
-  { id: 'AC-04', title: 'Kernel Dev', desc: 'Successfully architected the Vesni OS kernel and Cyber OS engine.', icon: Cpu, color: 'text-purple-400', metric: 'SYS_STABLE' },
-  { id: 'AC-05', title: 'Versatile', desc: 'Adaptable tactical performance on the pitch. Capable of dominating in any position from defense to attack.', icon: Move, color: 'text-red-600', metric: 'ROLE:ALL_ROUNDER' },
-  { id: 'AC-06', title: 'Game Scaler', desc: 'Scaled PC26 Cricket to support massive concurrent user surges.', icon: Gamepad2, color: 'text-yellow-400', metric: 'SCALE_READY' }
+  { 
+    id: '01', 
+    title: '25,000+ Music Plays', 
+    desc: 'Surpassed 25,000+ unique streams on SoundCloud and multi-platform digital music releases.', 
+    icon: Music, 
+    color: 'text-emerald-400', 
+    metric: '25K+ Streams' 
+  },
+  { 
+    id: '02', 
+    title: 'Film Director: NARCOTICS', 
+    desc: 'Wrote and directed the neo-noir crime thriller short film NARCOTICS presented by P2 Productions.', 
+    icon: Film, 
+    color: 'text-red-400', 
+    metric: 'P2 Productions' 
+  },
+  { 
+    id: '03', 
+    title: 'Operating System Architect', 
+    desc: 'Engineered custom web desktop operating systems including Vesni OS and Cyber OS.', 
+    icon: Cpu, 
+    color: 'text-purple-400', 
+    metric: 'Web OS Engine' 
+  },
+  { 
+    id: '04', 
+    title: 'Security & Infrastructure Auditing', 
+    desc: 'Conducted ethical security audits, vulnerability scanning, and hardening across networks.', 
+    icon: Shield, 
+    color: 'text-cyan-400', 
+    metric: 'Ethical Security' 
+  },
+  { 
+    id: '05', 
+    title: 'Game Scaling & Infrastructure', 
+    desc: 'Scaled PC26 Cricket to support high concurrent active user sessions seamlessly.', 
+    icon: Gamepad2, 
+    color: 'text-amber-400', 
+    metric: 'High Concurrency' 
+  },
+  { 
+    id: '06', 
+    title: 'Athletic Versatility', 
+    desc: 'Dynamic football player adaptable to any position across the pitch from defense to attack.', 
+    icon: Move, 
+    color: 'text-rose-400', 
+    metric: 'All-Rounder' 
+  }
 ];
 
 const SOCIALS = [
-  { name: 'Github', icon: Github, url: 'https://github.com/Vesni' },
-  { name: 'Youtube', icon: Youtube, url: 'https://www.youtube.com/@NotebookLMgoogl' },
-  { name: 'Discord', icon: Gamepad2, url: 'https://discord.gg/tZE7WEkyhH' },
-  { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/https.vesni/' }
+  { name: 'GitHub', icon: Github, url: 'https://github.com/Vesni', label: 'github.com/Vesni' },
+  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/vesni-lanus/', label: 'linkedin.com/in/vesni-lanus' },
+  { name: 'Spotify', icon: Music, url: 'https://open.spotify.com/track/4ZaaaNrR5y7vm9I4gRBtYr?autoplay_ok=1', label: 'Official Discography' },
+  { name: 'Gaana', icon: Radio, url: 'https://gaana.com/artist/vesni-lanus', label: 'Artist Profile' },
+  { name: 'Email', icon: Mail, url: 'mailto:vesni277@gmail.com', label: 'vesni277@gmail.com' }
+];
+
+const NAV_ITEMS = [
+  { label: 'Film', id: 'narcotics' },
+  { label: 'Music', id: 'bands' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Milestones', id: 'achievements' },
+  { label: 'About', id: 'about' },
+  { label: 'Contact', id: 'contact' }
 ];
 
 const App: React.FC = () => {
+  const [showIntro, setShowIntro] = useState<boolean>(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isKaliModalOpen, setIsKaliModalOpen] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'pc'>('pc');
-  const [showIntro, setShowIntro] = useState(true);
+  const [activeSection, setActiveSection] = useState<string>('narcotics');
 
   useEffect(() => {
-    const checkResize = () => {
-      const w = window.innerWidth;
-      if (w < 768) setDeviceType('mobile');
-      else if (w < 1280) setDeviceType('tablet');
-      else setDeviceType('pc');
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + 250;
+      for (const item of NAV_ITEMS) {
+        const el = document.getElementById(item.id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(item.id);
+            break;
+          }
+        }
+      }
     };
-    checkResize();
-    window.addEventListener('resize', checkResize);
-    return () => window.removeEventListener('resize', checkResize);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollTo = (id: string) => {
     setIsMenuOpen(false);
     const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+    if (el) {
+      window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
+    }
   };
 
-  const NavContent = () => (
-    <div className={`flex ${deviceType === 'pc' ? 'gap-12' : 'flex-col gap-8 items-center'}`}>
-      {['Projects', 'Achievements', 'About', 'Contact'].map(item => (
-        <button 
-          key={item} 
-          onClick={() => scrollTo(item.toLowerCase())}
-          className="text-[10px] font-mono tracking-[0.4em] uppercase hover:text-[#00ffaa] transition-all relative group"
-        >
-          <span className="absolute -left-3 opacity-0 group-hover:opacity-100 transition-opacity text-[#00ffaa]">[</span>
-          {item}
-          <span className="absolute -right-3 opacity-0 group-hover:opacity-100 transition-opacity text-[#00ffaa]">]</span>
-        </button>
-      ))}
-    </div>
-  );
-
   return (
-    <div className="relative min-h-screen bg-[#050505] text-white selection:bg-[#00ffaa] selection:text-black font-sans crt-overlay overflow-x-hidden">
-      <CustomCursor />
-      <FluidBackground />
+    <div className="min-h-screen bg-[#0a0a0c] text-white font-sans selection:bg-emerald-500 selection:text-black">
       
+      {/* PAGE INTRO OVERLAY */}
       <AnimatePresence>
-        {showIntro && <Intro onComplete={() => setShowIntro(false)} />}
-      </AnimatePresence>
-
-      {/* PC TOP NAV */}
-      {deviceType === 'pc' && !showIntro && (
-        <motion.nav 
-          initial={{ y: -50, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
-          className="fixed top-0 left-0 right-0 z-[100] px-16 py-10 flex justify-between items-center mix-blend-difference"
-        >
-          <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-            <div className="w-12 h-12 bg-[#00ffaa] flex items-center justify-center text-black font-black border-tactical shadow-[0_0_20px_rgba(0,255,170,0.3)]">
-              <Terminal size={24} />
-            </div>
-            <span className="font-heading text-xl font-black tracking-tighter">VESNI.SYS</span>
-          </div>
-          <NavContent />
-        </motion.nav>
-      )}
-
-      {/* TABLET SIDEBAR */}
-      {deviceType === 'tablet' && !showIntro && (
-        <motion.nav 
-          initial={{ x: -100 }} animate={{ x: 0 }}
-          className="fixed top-0 left-0 bottom-0 w-24 bg-black/40 backdrop-blur-3xl border-r border-white/5 z-[100] flex flex-col items-center py-12"
-        >
-          <div className="w-14 h-14 bg-[#00ffaa] flex items-center justify-center text-black mb-20 border-tactical">
-            <Terminal size={24} />
-          </div>
-          <div className="flex-1 flex flex-col justify-center gap-16">
-            {['Projects', 'Achievements', 'About', 'Contact'].map(item => (
-              <button 
-                key={item} 
-                onClick={() => scrollTo(item.toLowerCase())}
-                className="rotate-90 origin-center text-[10px] font-mono tracking-widest uppercase text-white/40 hover:text-[#00ffaa] whitespace-nowrap"
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        </motion.nav>
-      )}
-
-      {/* MOBILE TOP BAR */}
-      {deviceType === 'mobile' && !showIntro && (
-        <motion.nav className="fixed top-0 left-0 right-0 z-[100] bg-black/90 backdrop-blur-xl px-6 py-5 flex justify-between items-center border-b border-white/10">
-          <span className="font-heading text-sm font-black text-[#00ffaa]">VESNI.SYS</span>
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="w-10 h-10 border border-white/10 flex items-center justify-center">
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </motion.nav>
-      )}
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, x: '100%' }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 z-[95] bg-[#050505] flex flex-col items-center justify-center"
-          >
-            <NavContent />
-          </motion.div>
+        {showIntro && (
+          <PageIntro onComplete={() => setShowIntro(false)} />
         )}
       </AnimatePresence>
 
-      <main className={`${deviceType === 'tablet' ? 'pl-24' : ''} ${showIntro ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'}`}>
-        {/* HERO */}
-        <section className={`min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden ${deviceType === 'pc' ? 'text-center' : 'text-left items-start md:px-20'}`}>
+      {/* Top Navigation */}
+      <header className="fixed top-0 left-0 right-0 z-40 bg-[#0a0a0c]/80 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           
-          {/* HUD Brackets - The "Cool" corners */}
-          <div className="absolute top-10 left-10 w-20 h-20 border-t-2 border-l-2 border-[#00ffaa]/20 hidden lg:block" />
-          <div className="absolute top-10 right-10 w-20 h-20 border-t-2 border-r-2 border-[#00ffaa]/20 hidden lg:block" />
-          <div className="absolute bottom-10 left-10 w-20 h-20 border-b-2 border-l-2 border-[#00ffaa]/20 hidden lg:block" />
-          <div className="absolute bottom-10 right-10 w-20 h-20 border-b-2 border-r-2 border-[#00ffaa]/20 hidden lg:block" />
+          {/* Logo */}
+          <div 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center gap-3 cursor-pointer group"
+          >
+            <div className="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center font-bold text-sm group-hover:bg-emerald-400 transition-colors">
+              V
+            </div>
+            <span className="font-bold text-base tracking-tight font-heading">
+              VESNI
+            </span>
+          </div>
 
-          {deviceType === 'pc' && (
-            <>
-              <div className="absolute top-1/2 left-20 -translate-y-1/2 opacity-20 flex flex-col gap-6">
-                <div className="w-1 h-32 bg-gradient-to-b from-[#00ffaa] to-transparent" />
-                <div className="font-mono text-[8px] uppercase tracking-widest text-white vertical-text">LOC_SEC_PORT_8080</div>
-              </div>
-              <div className="absolute top-1/2 right-20 -translate-y-1/2 opacity-20 flex flex-col items-end gap-6">
-                <div className="font-mono text-[8px] uppercase tracking-widest text-white vertical-text">DATA_FLOW_STABLE</div>
-                <div className="w-1 h-32 bg-gradient-to-t from-[#ff3333] to-transparent" />
-              </div>
-            </>
-          )}
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider">
+            {NAV_ITEMS.map(item => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className={`transition-colors py-1 ${
+                  activeSection === item.id 
+                    ? 'text-emerald-400 font-bold' 
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="z-10 w-full max-w-7xl">
-            <div className={`mb-10 flex items-center gap-3 bg-[#00ffaa]/5 border border-[#00ffaa]/20 px-4 py-1.5 w-fit font-mono text-[9px] tracking-widest text-[#00ffaa] ${deviceType === 'pc' ? 'mx-auto' : ''}`}>
-               <div className="w-1.5 h-1.5 bg-[#00ffaa] pulse-led" /> SYSTEM_INITIALIZED_OK
+          {/* Right Action: Replay Intro + Contact Button */}
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={() => setShowIntro(true)}
+              className="px-3 py-1.5 rounded-lg text-[11px] font-semibold text-zinc-400 hover:text-emerald-400 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-all"
+            >
+              Play Intro
+            </button>
+
+            <button
+              onClick={() => scrollTo('contact')}
+              className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-bold uppercase tracking-wider text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
+            >
+              Get in Touch
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white"
+          >
+            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+
+        {/* Mobile Dropdown */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-[#0a0a0c] border-b border-zinc-800 px-6 py-6 space-y-4">
+            {NAV_ITEMS.map(item => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className="block w-full text-left py-2 text-sm font-semibold uppercase tracking-wider text-zinc-300 hover:text-emerald-400"
+              >
+                {item.label}
+              </button>
+            ))}
+            <button
+              onClick={() => { setIsMenuOpen(false); setShowIntro(true); }}
+              className="block w-full text-left py-2 text-sm font-semibold uppercase tracking-wider text-zinc-400 hover:text-white"
+            >
+              Replay Intro
+            </button>
+          </div>
+        )}
+      </header>
+
+      <main className="pt-16">
+        
+        {/* HERO SECTION */}
+        <section className="min-h-[85vh] flex flex-col items-center justify-center px-6 py-20 text-center relative overflow-hidden">
+          
+          {/* Subtle Ambient Light */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-80 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+
+          <div className="max-w-4xl mx-auto relative z-10">
+            
+            {/* Tagline Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 text-xs font-medium mb-8">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              Full-Stack Developer • Film Director • Music Producer
             </div>
 
-            <GradientText 
-              text="VESNI" 
-              className={`leading-[0.85] mb-8 tracking-tighter block
-                ${deviceType === 'mobile' ? 'text-[28vw]' : deviceType === 'tablet' ? 'text-[22vw]' : 'text-[18vw]'}
-              `}
-            />
+            {/* Name */}
+            <h1 className="text-6xl sm:text-8xl md:text-9xl font-black tracking-tight text-white uppercase font-heading mb-6">
+              VESNI
+            </h1>
 
-            <p className={`font-mono uppercase tracking-[0.4em] text-white/40 mb-14 max-w-3xl ${deviceType === 'pc' ? 'mx-auto' : ''} ${deviceType === 'mobile' ? 'text-[9px]' : 'text-sm'}`}>
-              Full-Stack Architect // Ethical Auditor // Versatile // Film Director
+            {/* Bio summary */}
+            <p className="text-zinc-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 font-normal">
+              Building modern software systems, directing independent cinema with <strong className="text-red-400 font-semibold">P2 Productions</strong>, and producing original music.
             </p>
 
-            <div className={`flex flex-wrap gap-5 ${deviceType === 'pc' ? 'justify-center' : 'justify-start'}`}>
-              <button onClick={() => scrollTo('projects')} className="bg-[#00ffaa] text-black px-12 py-5 font-black text-[10px] tracking-[0.4em] uppercase hover:bg-white transition-all border-tactical" data-hover="true">
-                Execute_Access
+            {/* Direct Action Buttons */}
+            <div className="flex flex-wrap gap-4 justify-center items-center">
+              <button
+                onClick={() => scrollTo('narcotics')}
+                className="px-7 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-red-600/20"
+              >
+                <Film size={16} /> Short Film: NARCOTICS
               </button>
-              <button onClick={() => scrollTo('about')} className="border border-white/20 text-white px-12 py-5 font-black text-[10px] tracking-[0.4em] uppercase hover:bg-white/5 transition-all" data-hover="true">
-                Entity_Data
+
+              <button
+                onClick={() => scrollTo('bands')}
+                className="px-7 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-emerald-500/20"
+              >
+                <Music size={16} /> Single: BANDS (25k+ Streams)
+              </button>
+
+              <button
+                onClick={() => scrollTo('projects')}
+                className="px-7 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all"
+              >
+                <Cpu size={16} /> Software Vault
               </button>
             </div>
-          </motion.div>
+
+          </div>
         </section>
 
-        {/* PROJECTS */}
-        <section id="projects" className="py-40 px-6 md:px-24 bg-black relative grid-tactical">
-          <div className="max-w-[1700px] mx-auto">
-            <header className="mb-32 flex flex-col md:flex-row justify-between items-end border-b border-white/5 pb-16 gap-10">
-              <h2 className={`font-heading font-black leading-none uppercase ${deviceType === 'mobile' ? 'text-6xl' : 'text-9xl'}`}>
-                THE <span className="text-[#00ffaa]">VAULT.</span>
+        {/* SECTION 1: NARCOTICS SHORT FILM */}
+        <NarcoticsSection />
+
+        {/* SECTION 2: BANDS MUSIC RELEASE */}
+        <BandsSection />
+
+        {/* SECTION 3: PROJECTS / SOFTWARE VAULT */}
+        <section id="projects" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#0c0c0f] border-b border-white/5">
+          <div className="max-w-6xl mx-auto">
+            
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-16 pb-8 border-b border-zinc-800 gap-4">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">
+                  Selected Work
+                </span>
+                <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading">
+                  Software Projects
+                </h2>
+              </div>
+              <span className="text-xs text-zinc-500 font-medium">
+                {PROJECTS.length} Featured Applications
+              </span>
+            </div>
+
+            {/* Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {PROJECTS.map(p => (
+                <ProjectCard
+                  key={p.id}
+                  project={p}
+                  onClick={() => setSelectedProject(p)}
+                />
+              ))}
+            </div>
+
+          </div>
+        </section>
+
+        {/* SECTION 4: ACHIEVEMENTS & MILESTONES */}
+        <section id="achievements" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#0a0a0c] border-b border-white/5">
+          <div className="max-w-6xl mx-auto">
+            
+            {/* Header */}
+            <div className="mb-16 pb-8 border-b border-zinc-800">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">
+                Highlights
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading">
+                Milestones & Stats
               </h2>
-              <div className="font-mono text-[10px] text-white/30 tracking-[0.5em] uppercase text-right">
-                [ INDEXED_RECORDS: {PROJECTS.length} ]
-              </div>
-            </header>
-
-            <div className={`grid gap-6 ${
-              deviceType === 'mobile' ? 'grid-cols-1' : 
-              deviceType === 'tablet' ? 'grid-cols-2' : 
-              'grid-cols-2 lg:grid-cols-3'
-            }`}>
-              {PROJECTS.map(p => <ProjectCard key={p.id} project={p} onClick={() => setSelectedProject(p)} />)}
             </div>
+
+            {/* Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {ACHIEVEMENTS.map(ach => (
+                <div 
+                  key={ach.id}
+                  className="p-6 sm:p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800/80 hover:border-zinc-700 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-6">
+                      <div className={`p-3 rounded-xl bg-zinc-950 border border-zinc-800 ${ach.color}`}>
+                        <ach.icon size={22} />
+                      </div>
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-zinc-950 text-zinc-400 border border-zinc-800">
+                        {ach.metric}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2 font-heading">
+                      {ach.title}
+                    </h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed">
+                      {ach.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </section>
 
-        {/* ACHIEVEMENTS */}
-        <section id="achievements" className="py-40 px-6 md:px-24 bg-[#0a0a0b] border-t border-white/5">
-           <div className="max-w-[1700px] mx-auto">
-              <div className="flex items-center gap-5 mb-24 border-l-4 border-red-600 pl-8">
-                <h2 className={`font-heading font-black uppercase tracking-tight ${deviceType === 'mobile' ? 'text-4xl' : 'text-7xl'}`}>MILESTONES.</h2>
+        {/* SECTION 5: ABOUT */}
+        <section id="about" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#0c0c0f] border-b border-white/5">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div className="lg:col-span-7 space-y-6">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block">
+                About Vesni
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading leading-tight">
+                Creator & Developer
+              </h2>
+              <div className="space-y-4 text-zinc-300 text-base sm:text-lg leading-relaxed font-normal">
+                <p>
+                  I am <strong>Vesni</strong> — a multidisciplinary creator focusing on full-stack web development, independent cinema, and music production.
+                </p>
+                <p>
+                  As Director at <strong className="text-white">P2 Productions</strong>, I lead original films, including our 2025 short film <strong className="text-red-400">NARCOTICS</strong> starring Arun in his debut role.
+                </p>
+                <p>
+                  In sound, I write, compose, produce, and mix tracks like <strong className="text-emerald-400">BANDS</strong> featuring R3$T, with over <strong className="text-white">25,000+ plays</strong> across SoundCloud and streaming platforms.
+                </p>
               </div>
-              
-              <div className={`grid gap-1 ${
-                deviceType === 'mobile' ? 'grid-cols-1' : 
-                deviceType === 'tablet' ? 'grid-cols-2' : 
-                'grid-cols-3'
-              }`}>
-                {ACHIEVEMENTS.map(ach => (
-                  <div key={ach.id} className="p-12 md:p-16 bg-black border border-white/5 hover:border-[#00ffaa]/40 transition-all group border-tactical overflow-hidden relative">
-                    <div className="absolute top-0 right-0 w-16 h-16 bg-[#00ffaa]/5 -rotate-45 translate-x-8 -translate-y-8" />
-                    <div className={`${ach.color} mb-10 flex justify-between`}>
-                      <ach.icon size={deviceType === 'mobile' ? 32 : 44} className="group-hover:scale-110 transition-transform" />
-                      <span className="font-mono text-[10px] opacity-20 uppercase tracking-widest">{ach.id}</span>
-                    </div>
-                    <h3 className="text-2xl font-heading font-black mb-6 uppercase group-hover:text-[#00ffaa] transition-colors tracking-tighter">{ach.title}</h3>
-                    <p className="text-white/40 text-sm mb-10 leading-relaxed font-light">{ach.desc}</p>
-                    <div className="pt-8 border-t border-white/5 flex items-center justify-between">
-                       <span className="font-mono text-[9px] text-[#00ffaa] tracking-[0.3em] font-bold">{ach.metric}</span>
-                       <Crosshair size={14} className="opacity-20" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-           </div>
-        </section>
-
-        {/* ABOUT */}
-        <section id="about" className="py-40 px-6 md:px-24 bg-[#050505] overflow-hidden">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-            <div className="space-y-16">
-               <h2 className={`font-heading font-black leading-tight uppercase ${deviceType === 'mobile' ? 'text-5xl' : 'text-8xl'}`}>ENTITY_ <br/> <span className="text-[#00ffaa]">PROFILE.</span></h2>
-               <div className="text-lg md:text-xl font-light text-white/50 leading-relaxed space-y-10 border-l-2 border-[#00ffaa]/20 pl-10">
-                 <p>I am <span className="text-white font-bold tracking-tight">VESNI</span>. A tactical multi-threat entity specializing in secure full-stack architecture and industrial audio-visual engineering.</p>
-                 <p>As Director of <span className="text-white font-bold underline decoration-[#00ffaa] decoration-2 underline-offset-4">P2 Productions</span>, I lead creative engineering in cinematic motion, currently focusing on the 2025 release of Alpha 1.</p>
-               </div>
-               
-               <div className="flex flex-wrap gap-4">
-                  <div className="px-8 py-6 bg-white/5 border border-white/10 border-tactical flex-1 min-w-[240px]">
-                     <div className="flex items-center gap-3 mb-3">
-                       <Move className="text-[#ff3333] w-4 h-4" />
-                       <span className="block font-mono text-[8px] text-[#ff3333] uppercase tracking-[0.5em] font-bold">Football_Profile</span>
-                     </div>
-                     <span className="text-3xl font-heading font-black text-white">VERSATILE</span>
-                     <span className="block font-mono text-[9px] text-white/30 mt-2">HIGH_TACTICAL_FLEXIBILITY</span>
-                  </div>
-                  <div className="px-8 py-6 bg-white/5 border border-white/10 border-tactical flex-1 min-w-[240px]">
-                     <div className="flex items-center gap-3 mb-3">
-                       <Music className="text-[#00ffaa] w-4 h-4" />
-                       <span className="block font-mono text-[8px] text-[#00ffaa] uppercase tracking-[0.5em] font-bold">Music_Stats</span>
-                     </div>
-                     <span className="text-3xl font-heading font-black text-white">2K+ PLAYS</span>
-                     <span className="block font-mono text-[9px] text-white/30 mt-2">SOUNDCLOUD_INDEXED</span>
-                  </div>
-               </div>
             </div>
 
-            {deviceType !== 'mobile' && (
-              <div className="bg-white/5 border border-white/10 p-16 backdrop-blur-2xl relative border-tactical group">
-                 <div className="absolute top-0 right-0 w-32 h-32 border-t-2 border-r-2 border-[#00ffaa]/30 translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform" />
-                 <h3 className="font-heading font-bold mb-16 flex items-center gap-4 border-b border-white/10 pb-6 text-2xl uppercase">
-                   <Cpu className="text-[#00ffaa]" /> LOGIC_MODULES
-                 </h3>
-                 <div className="space-y-12">
-                   <div className="space-y-6">
-                     <span className="text-[10px] font-mono tracking-[0.4em] text-white/30 block uppercase font-bold">Front_End_Interface</span>
-                     <div className="flex flex-wrap gap-3">
-                        {['REACT', 'TS', 'TAILWIND', 'VITE'].map(s => <span key={s} className="bg-white text-black px-5 py-2 text-[10px] font-black uppercase tracking-widest">{s}</span>)}
-                     </div>
-                   </div>
-                   <div className="space-y-6">
-                     <span className="text-[10px] font-mono tracking-[0.4em] text-white/30 block uppercase font-bold">Security_Array</span>
-                     <div className="flex flex-wrap gap-3">
-                        {['NMAP', 'BURP', 'HACK_SIM', 'AUDIT'].map(s => <span key={s} className="border border-red-600 text-red-500 bg-red-500/5 px-5 py-2 text-[10px] font-mono uppercase font-bold">{s}</span>)}
-                     </div>
-                   </div>
-                 </div>
+            <div className="lg:col-span-5 p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-6">
+              <h3 className="text-lg font-bold text-white font-heading">
+                Core Skills & Tools
+              </h3>
+
+              <div className="space-y-4 text-xs">
+                <div>
+                  <span className="text-zinc-500 block uppercase font-medium mb-2">Development</span>
+                  <div className="flex flex-wrap gap-2">
+                    {['React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS', 'Vite', 'Firebase'].map(s => (
+                      <span key={s} className="px-3 py-1 rounded-md bg-zinc-800 text-zinc-200 font-semibold">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-zinc-500 block uppercase font-medium mb-2">Film & Direction</span>
+                  <div className="flex flex-wrap gap-2">
+                    {['P2 Productions', 'NARCOTICS', 'Screenplay', 'Directing', 'Color Grading'].map(s => (
+                      <span key={s} className="px-3 py-1 rounded-md bg-red-950/40 text-red-300 border border-red-900/40 font-semibold">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-zinc-500 block uppercase font-medium mb-2">Music & Audio</span>
+                  <div className="flex flex-wrap gap-2">
+                    {['BANDS', 'Beat Production', 'Songwriting', 'Audio Mixing', 'SoundCloud'].map(s => (
+                      <span key={s} className="px-3 py-1 rounded-md bg-emerald-950/40 text-emerald-300 border border-emerald-900/40 font-semibold">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
-            )}
+            </div>
+
           </div>
         </section>
 
-        {/* FOOTER */}
-        <footer id="contact" className="py-40 px-6 md:px-24 border-t border-white/5 bg-black">
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className={`font-heading font-black text-white/5 mb-28 select-none tracking-tighter uppercase ${deviceType === 'mobile' ? 'text-7xl' : 'text-[14vw]'}`}>TRANSMIT.</h2>
-            <div className={`grid gap-4 mb-32 ${deviceType === 'mobile' ? 'grid-cols-2' : 'grid-cols-4'}`}>
+        {/* SECTION 6: CONTACT / TRANSMIT */}
+        <footer id="contact" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#08080a]">
+          <div className="max-w-6xl mx-auto">
+            
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-2">
+                Connect
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading mb-4">
+                Get In Touch
+              </h2>
+              <p className="text-zinc-400 text-sm sm:text-base">
+                Feel free to reach out for collaborations, music inquiries, or software projects.
+              </p>
+            </div>
+
+            {/* Social Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-16">
               {SOCIALS.map(s => (
-                <a key={s.name} href={s.url} target="_blank" className="p-12 border border-white/5 hover:border-[#00ffaa] hover:bg-[#00ffaa]/5 transition-all group border-tactical" data-hover="true">
-                  <s.icon className="mx-auto mb-6 group-hover:text-[#00ffaa] group-hover:scale-110 transition-all" size={32} />
-                  <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-white/40 group-hover:text-white font-bold">{s.name}</span>
+                <a
+                  key={s.name}
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 transition-all flex flex-col items-center text-center group"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-emerald-400 group-hover:border-emerald-500/30 transition-all mb-4">
+                    <s.icon size={22} />
+                  </div>
+                  <h4 className="font-bold text-white text-base mb-1">{s.name}</h4>
+                  <span className="text-xs text-zinc-500 truncate max-w-full">{s.label}</span>
                 </a>
               ))}
             </div>
-            <div className="pt-24 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10 font-mono text-[10px] text-white/20 tracking-[0.4em] uppercase font-bold">
-               <span>// ARCHIVE_VESNI_PRO_PORTFOLIO</span>
-               <div className="flex gap-12">
-                 <span className="text-[#00ffaa] font-black">SYS_STABLE_REL_2.5</span>
-                 <span>LAYOUT: {deviceType.toUpperCase()}</span>
-               </div>
-               <span>© 2025 ALL_RECORDS_SECURED</span>
+
+            {/* Interactive "Hey" Text Card revealing Ethical Hacking & Kali Linux Mastery */}
+            <div className="mb-16 flex justify-center">
+              <button
+                onClick={() => setIsKaliModalOpen(true)}
+                className="group inline-flex items-center gap-3 px-5 py-3 rounded-full bg-zinc-900/80 border border-zinc-800 hover:border-cyan-500/50 text-zinc-400 hover:text-cyan-300 transition-all duration-300 shadow-md hover:shadow-[0_0_25px_rgba(6,182,212,0.15)] cursor-pointer"
+              >
+                <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 group-hover:animate-ping" />
+                <span className="text-xs sm:text-sm font-medium">
+                  <strong className="text-white font-bold group-hover:text-cyan-300">Hey</strong> — click here for info on my ethical hacking & Kali Linux toolset
+                </span>
+                <ChevronRight size={16} className="text-zinc-500 group-hover:text-cyan-300 group-hover:translate-x-0.5 transition-transform" />
+              </button>
             </div>
+
+            {/* Footer Bottom Line */}
+            <div className="pt-8 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+              <span>© 2025 Vesni • P2 Productions</span>
+              <div className="flex flex-wrap gap-6 justify-center">
+                <span>Short Film: NARCOTICS</span>
+                <span>Single: BANDS (25k+ Streams)</span>
+                <span>Pulse Messenger</span>
+              </div>
+            </div>
+
           </div>
         </footer>
+
       </main>
 
-      {/* MODAL */}
+      {/* ETHICAL HACKING / KALI LINUX MODAL */}
+      <AnimatePresence>
+        {isKaliModalOpen && (
+          <KaliModal onClose={() => setIsKaliModalOpen(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* PROJECT MODAL */}
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
-            className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-3xl flex items-center justify-center p-4 md:p-12 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 overflow-y-auto"
           >
-             <motion.div
-              initial={{ scale: 0.95, y: 30 }} animate={{ scale: 1, y: 0 }}
-              className={`w-full max-w-6xl bg-[#0a0a0b] border border-white/10 flex flex-col shadow-[0_0_120px_rgba(0,0,0,1)] relative overflow-hidden border-tactical ${deviceType === 'pc' ? 'md:flex-row' : ''}`}
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
               onClick={e => e.stopPropagation()}
-             >
-                <button onClick={() => setSelectedProject(null)} className="absolute top-8 right-8 z-30 text-white/40 hover:text-white transition-colors" data-hover="true">
-                  <X size={36} />
-                </button>
-                <div className={`${deviceType === 'pc' ? 'w-1/2' : 'w-full h-80'} bg-black relative`}>
-                  <img src={selectedProject.image} className="absolute inset-0 w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000" alt={selectedProject.title} />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0a0a0b]" />
-                  <div className="absolute inset-0 scanner-line opacity-30" />
+              className="w-full max-w-2xl rounded-2xl bg-[#121216] border border-zinc-800 overflow-hidden shadow-2xl relative"
+            >
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 text-zinc-400 hover:text-white flex items-center justify-center"
+              >
+                <X size={18} />
+              </button>
+
+              <div className="h-56 w-full bg-zinc-950 overflow-hidden relative">
+                <img 
+                  src={selectedProject.image} 
+                  alt={selectedProject.title} 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#121216] via-transparent to-transparent" />
+              </div>
+
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  {selectedProject.tags.map(t => (
+                    <span key={t} className="text-xs font-semibold px-2.5 py-0.5 rounded-md bg-zinc-800 text-zinc-300">
+                      {t}
+                    </span>
+                  ))}
                 </div>
-                <div className={`p-12 md:p-24 flex flex-col justify-center ${deviceType === 'pc' ? 'w-1/2' : 'w-full'}`}>
-                  <span className="text-[#00ffaa] font-mono text-[11px] tracking-[0.5em] mb-6 uppercase font-black">RECORD_ID: {selectedProject.id}</span>
-                  <h3 className="text-5xl md:text-8xl font-heading font-black mb-10 leading-none tracking-tighter uppercase">{selectedProject.title}</h3>
-                  <p className="text-white/60 mb-14 text-lg md:text-xl leading-relaxed font-light">{selectedProject.description}</p>
-                  <div className="flex flex-wrap gap-4 mb-14">
-                    {selectedProject.tags.map(t => <span key={t} className="text-[10px] font-mono border border-white/10 px-6 py-2 uppercase bg-white/5 tracking-widest">{t}</span>)}
-                  </div>
+
+                <h3 className="text-2xl sm:text-3xl font-black uppercase text-white font-heading mb-3">
+                  {selectedProject.title}
+                </h3>
+
+                <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
+                  {selectedProject.description}
+                </p>
+
+                <div className="flex items-center justify-between pt-6 border-t border-zinc-800">
+                  <span className="text-xs text-zinc-500 font-medium">
+                    {selectedProject.techStack} • {selectedProject.year}
+                  </span>
+
                   {selectedProject.link && (
-                    <a href={selectedProject.link} target="_blank" className="bg-[#00ffaa] text-black px-14 py-5 text-[11px] font-black uppercase tracking-[0.5em] hover:bg-white transition-colors text-center border-tactical" data-hover="true">
-                      Initiate_Link
+                    <a
+                      href={selectedProject.link}
+                      target={selectedProject.link.startsWith('http') ? '_blank' : '_self'}
+                      rel="noreferrer"
+                      className="px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-colors"
+                    >
+                      Visit Project <ExternalLink size={14} />
                     </a>
                   )}
                 </div>
-             </motion.div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
     </div>
   );
 };
