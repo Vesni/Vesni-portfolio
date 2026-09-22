@@ -5,82 +5,75 @@
 
 import React from 'react';
 import { 
-  Terminal, 
-  ShieldAlert, 
-  Lock, 
-  Layers, 
-  CheckCircle2, 
   Code, 
-  Cpu, 
+  Sparkles, 
   Wrench, 
-  Eye, 
-  Flame,
-  Sparkles
+  CheckCircle2 
 } from 'lucide-react';
 
 export const SkillsEcosystemSection: React.FC = () => {
   const SKILL_DOMAINS = [
     {
-      category: 'Software Architecture & Defensive Security',
-      icon: Terminal,
+      category: 'Software & Web Development',
+      icon: Code,
       color: 'emerald',
-      desc: 'Former offensive red-team practitioner using Kali Linux & BlackArch, now designing resilient zero-trust architectures and hardened web infrastructure.',
+      desc: 'Building responsive websites, useful apps, and testing them thoroughly to make sure they are safe from hackers.',
       skills: [
-        'Full-Stack Web Development',
-        'Responsive Multi-Device UI/UX',
-        'Product Strategy & Systems Architecture',
-        'Penetration Testing (Kali Linux / BlackArch)',
-        'Red Teaming & Threat Emulation',
-        'Defensive Security & Zero-Trust Hardening',
-        'Applied Cryptography & Privacy-First Protocols'
+        'Full-stack website development',
+        'Clean, mobile-friendly interface design',
+        'High-speed real-time messaging apps',
+        'Testing websites for security holes',
+        'Ethical hacking and security audits',
+        'Protecting passwords and private user data',
+        'Database setup and server workflows'
       ]
     },
     {
-      category: 'Design, Media Production & Cinematography',
+      category: 'Design, Movies & Music',
       icon: Sparkles,
       color: 'red',
-      desc: 'Commercial-grade aesthetics, screenwriting, cinematic color pipelines, audio mastering, and modern user-centric interfaces.',
+      desc: 'Creating visual artwork, directing short films, editing video, and composing original music soundtracks.',
       skills: [
-        'Modern UI/UX Design & Prototyping',
-        'Product & Ergonomic Design',
-        'Graphic Design & Poster Art',
-        'Brand Identity & Systems',
-        'Motion Graphics & Transitions',
-        'Cinematic Video Editing & Color Timing',
-        'Soundtrack Production & Audio Mastering'
+        'Simple, intuitive user interface design',
+        'Movie directing and scriptwriting',
+        'Poster and promotional artwork',
+        'Video editing and scene timing',
+        'Color grading and visual polish',
+        'Music production and songwriting',
+        'Audio mixing and sound effects'
       ]
     },
     {
-      category: 'Operations, eSports & Hardware Engineering',
+      category: 'Management, Gaming & Electronics',
       icon: Wrench,
       color: 'cyan',
-      desc: 'Directing multi-sector enterprises, competitive tournament infrastructure, live daily streaming, and electronics diagnostics.',
+      desc: 'Leading projects at VOBA, running esports tournaments, streaming live, and repairing computer hardware.',
       skills: [
-        'Enterprise Management (VOBA)',
-        'Digital Marketing & Growth',
-        'Tournament Logistics (Clutch League)',
-        'Live Broadcast Operations (Twitch / Porom Vlogs)',
-        'Hardware Diagnostics & Micro-Soldering',
-        'Component-Level Electronics Repair',
-        'High-Concurrency Game Scaling'
+        'Managing VOBA and company projects',
+        'Running online gaming tournaments (Clutch League)',
+        'Hosting daily live streams on Twitch',
+        'Repairing broken computers and gadgets',
+        'Soldering small circuit board chips',
+        'Custom gaming PC builds and tuning',
+        'Social media and online brand growth'
       ]
     }
   ];
 
   return (
-    <section id="skills" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#0a0a0d] border-b border-white/5 relative">
+    <section id="skills" className="py-20 sm:py-28 px-4 sm:px-8 lg:px-16 bg-[#090a0d] border-b border-zinc-800/80 relative">
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}
-        <div className="mb-16 pb-8 border-b border-zinc-800">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-1">
-            Proficiencies
+        <div className="mb-12 pb-6 border-b border-zinc-800/80">
+          <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 block mb-1">
+            Capabilities
           </span>
-          <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading">
-            Core Skill Matrix
+          <h2 className="text-3xl sm:text-5xl font-bold uppercase text-white font-heading">
+            Skills & What I Do
           </h2>
-          <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-2xl">
-            Bridging adversarial cybersecurity, full-stack software development, film direction, and enterprise operations.
+          <p className="text-zinc-400 text-sm sm:text-base mt-1 max-w-2xl">
+            A simple overview of the skills, software, and creative tools I work with every day.
           </p>
         </div>
 
@@ -91,12 +84,12 @@ export const SkillsEcosystemSection: React.FC = () => {
             return (
               <div 
                 key={idx}
-                className="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between"
+                className="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-700 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-white">
-                      <Icon size={20} className={
+                    <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-white">
+                      <Icon size={18} className={
                         domain.color === 'emerald' ? 'text-emerald-400' :
                         domain.color === 'red' ? 'text-red-400' : 'text-cyan-400'
                       } />
@@ -106,23 +99,23 @@ export const SkillsEcosystemSection: React.FC = () => {
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-zinc-400 mb-6 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-6">
                     {domain.desc}
                   </p>
 
-                  <div className="space-y-2 pt-4 border-t border-zinc-800/80">
+                  <div className="space-y-2.5 pt-4 border-t border-zinc-800/80">
                     {domain.skills.map((skill, sIdx) => (
-                      <div key={sIdx} className="flex items-center gap-2.5 text-xs text-zinc-300">
-                        <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
-                        <span className="font-medium">{skill}</span>
+                      <div key={sIdx} className="flex items-start gap-2.5 text-xs text-zinc-300">
+                        <CheckCircle2 size={14} className={
+                          domain.color === 'emerald' ? 'text-emerald-400 shrink-0 mt-0.5' :
+                          domain.color === 'red' ? 'text-red-400 shrink-0 mt-0.5' : 'text-cyan-400 shrink-0 mt-0.5'
+                        } />
+                        <span>{skill}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-zinc-800/60 text-[11px] text-zinc-500 font-semibold uppercase tracking-wider">
-                  Production Verified • VOBA Standard
-                </div>
               </div>
             );
           })}

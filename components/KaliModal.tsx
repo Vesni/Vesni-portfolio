@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Terminal, X, CheckCircle2, Cpu, Wrench, Lock, Network } from 'lucide-react';
+import { Shield, Terminal, X, CheckCircle2 } from 'lucide-react';
 
 interface KaliModalProps {
   onClose: () => void;
@@ -14,34 +14,34 @@ interface KaliModalProps {
 export const KaliModal: React.FC<KaliModalProps> = ({ onClose }) => {
   const KALI_TOOL_CATEGORIES = [
     {
-      category: 'Information Gathering & Recon',
-      tools: ['Nmap', 'Zenmap', 'Wireshark', 'theHarvester', 'Recon-ng', 'Amass', 'Whois / DNSenum']
+      category: 'Scanning & Finding Weak Spots',
+      tools: ['Nmap', 'Zenmap', 'Wireshark', 'theHarvester', 'Recon-ng', 'Amass']
     },
     {
-      category: 'Vulnerability Analysis & Auditing',
-      tools: ['Nikto', 'Nessus', 'OpenVAS', 'WPScan', 'SQLmap', 'Commix', 'SSLScan']
+      category: 'Web Safety & Security Audits',
+      tools: ['Nikto', 'Nessus', 'OpenVAS', 'WPScan', 'SQLmap', 'SSLScan']
     },
     {
-      category: 'Exploitation & Frameworks',
-      tools: ['Metasploit Framework', 'Armitage', 'Searchsploit', 'BeEF Framework', 'CrackMapExec']
+      category: 'Password & Login Strength Testing',
+      tools: ['John the Ripper', 'Hashcat', 'Hydra', 'Medusa', 'Crunch']
     },
     {
-      category: 'Wireless & Network Auditing',
-      tools: ['Aircrack-ng suite', 'Kismet', 'Reaver', 'Wifite', 'Bettercap', 'Ettercap']
+      category: 'WiFi & Wireless Network Checks',
+      tools: ['Aircrack-ng', 'Kismet', 'Wifite', 'Bettercap', 'Ettercap']
     },
     {
-      category: 'Password Cracking & Hash Analysis',
-      tools: ['John the Ripper', 'Hashcat', 'Hydra', 'Medusa', 'Crunch', 'Ophcrack']
+      category: 'System Testing Frameworks',
+      tools: ['Metasploit', 'Armitage', 'Searchsploit', 'BeEF Framework']
     },
     {
-      category: 'Post-Exploitation & Forensics',
-      tools: ['Mimikatz', 'PowerSploit', 'Autopsy', 'Binwalk', 'Foremost', 'Ghidra / Radare2']
+      category: 'Data Analysis & File Forensics',
+      tools: ['Autopsy', 'Binwalk', 'Foremost', 'Ghidra', 'Radare2']
     }
   ];
 
   return (
     <div 
-      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -49,22 +49,20 @@ export const KaliModal: React.FC<KaliModalProps> = ({ onClose }) => {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.95, opacity: 0 }}
         onClick={e => e.stopPropagation()}
-        className="w-full max-w-3xl rounded-2xl bg-[#0d0f12] border border-cyan-500/30 shadow-[0_20px_70px_rgba(6,182,212,0.15)] overflow-hidden relative"
+        className="w-full max-w-2xl rounded-2xl bg-[#0d0f12] border border-cyan-500/30 shadow-2xl overflow-hidden relative"
       >
-        {/* Modal Top Header */}
-        <div className="px-6 py-5 bg-zinc-950/90 border-b border-zinc-800 flex items-center justify-between">
+        {/* Header */}
+        <div className="px-6 py-5 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-              <Terminal size={18} />
+            <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+              <Shield size={18} />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-400 border border-cyan-500/30">
-                  Ethical Hacking & Cyber Security
-                </span>
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold text-white font-heading mt-0.5">
-                Kali Linux Offensive & Defensive Tool Mastery
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-400 border border-cyan-500/20">
+                Ethical Hacking & App Safety
+              </span>
+              <h3 className="text-base sm:text-lg font-bold text-white font-heading mt-0.5">
+                Cybersecurity & Safety Testing Tools
               </h3>
             </div>
           </div>
@@ -77,27 +75,27 @@ export const KaliModal: React.FC<KaliModalProps> = ({ onClose }) => {
           </button>
         </div>
 
-        {/* Modal Body Content */}
-        <div className="p-6 sm:p-8 space-y-6 max-h-[75vh] overflow-y-auto">
+        {/* Body Content */}
+        <div className="p-6 sm:p-7 space-y-5 max-h-[70vh] overflow-y-auto">
           
-          {/* Intro statement banner */}
-          <div className="p-4 rounded-xl bg-cyan-950/20 border border-cyan-500/20 flex items-start gap-4">
-            <Shield className="text-cyan-400 shrink-0 mt-0.5" size={22} />
-            <div className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-normal">
-              I specialize in <strong className="text-white">Ethical Hacking, Penetration Testing, and Network Defense</strong>, with comprehensive hands-on proficiency across virtually every standard security tool in the <strong className="text-cyan-400">Kali Linux ecosystem</strong>.
-            </div>
+          {/* Simple Explanation */}
+          <div className="p-4 rounded-xl bg-cyan-950/20 border border-cyan-500/20 flex items-start gap-3">
+            <Terminal className="text-cyan-400 shrink-0 mt-0.5" size={18} />
+            <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-normal">
+              I learned ethical hacking with tools in <strong>Kali Linux</strong> to understand how bad actors try to break into systems. Today, I use that knowledge to find weaknesses in websites and apps early so I can fix them and protect people's private data.
+            </p>
           </div>
 
           {/* Tools Grid */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-              Proficient Toolsets & Methodologies
+              Tools I'm Experienced With
             </h4>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {KALI_TOOL_CATEGORIES.map((cat, i) => (
-                <div key={i} className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/90 hover:border-cyan-500/30 transition-all">
-                  <div className="text-xs font-bold text-cyan-300 mb-2.5 flex items-center gap-1.5">
+                <div key={i} className="p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-cyan-500/30 transition-all">
+                  <div className="text-xs font-semibold text-cyan-300 mb-2 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     {cat.category}
                   </div>
@@ -113,37 +111,37 @@ export const KaliModal: React.FC<KaliModalProps> = ({ onClose }) => {
             </div>
           </div>
 
-          {/* Core Methodologies */}
-          <div className="p-5 rounded-xl bg-zinc-950/80 border border-zinc-800 space-y-3">
+          {/* 3 Principles */}
+          <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2">
             <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-              Security Philosophy & Standards
+              My Core Safety Principles
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-zinc-400">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-zinc-300">
               <div className="flex items-start gap-2">
                 <CheckCircle2 size={14} className="text-cyan-400 shrink-0 mt-0.5" />
-                <span>OWASP Top 10 web audit workflows</span>
+                <span>Fix security flaws before apps go live</span>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 size={14} className="text-cyan-400 shrink-0 mt-0.5" />
-                <span>Network privilege escalation & hardening</span>
+                <span>Keep passwords and user data safe</span>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 size={14} className="text-cyan-400 shrink-0 mt-0.5" />
-                <span>Ethical disclosure & vulnerability remediation</span>
+                <span>Always follow ethical guidelines</span>
               </div>
             </div>
           </div>
 
         </div>
 
-        {/* Footer info bar */}
-        <div className="px-6 py-4 bg-zinc-950 border-t border-zinc-800/80 flex items-center justify-between text-xs text-zinc-500">
-          <span>Kali Linux Security Suite • Offensive & Defensive Workflows</span>
+        {/* Footer */}
+        <div className="px-6 py-4 bg-zinc-950 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-500">
+          <span>Ethical Security & Protection</span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold uppercase tracking-wider text-[11px] transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs uppercase tracking-wider transition-colors"
           >
-            Got it
+            Close
           </button>
         </div>
       </motion.div>

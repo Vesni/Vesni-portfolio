@@ -11,14 +11,8 @@ import {
   Gamepad2, 
   Video, 
   Wrench, 
-  Tv, 
-  Bot, 
-  ShieldCheck, 
-  Sparkles, 
-  Layers, 
   CheckCircle2,
-  Radio,
-  ArrowUpRight
+  ArrowRight
 } from 'lucide-react';
 
 export const VobaSection: React.FC = () => {
@@ -27,88 +21,91 @@ export const VobaSection: React.FC = () => {
   const DIVISIONS = [
     {
       id: 'interactive',
-      name: 'VOBA Interactive',
-      subtitle: 'Consumer Tech, Scalable Platforms & AI',
+      name: 'Apps & Software',
+      shortName: 'VOBA Interactive',
+      subtitle: 'Web Apps, Messaging & AI Tools',
       icon: Cpu,
       color: 'emerald',
-      badge: 'Consumer Tech & AI',
-      desc: 'Architecting next-generation communications, interactive web software, custom intelligence engines, and gaming portals.',
+      badge: 'Software & Apps',
+      desc: 'Building helpful apps, fast communication tools, and custom AI helpers that make everyday tasks easier.',
       items: [
         {
           name: 'Pulse Messenger',
-          role: 'Flagship Real-time Comms App',
-          desc: 'Modern privacy-centric communication app featuring end-to-end encryption, real-time voice/video calls, group chats, and broadcasts.',
+          role: 'Private Chat & Call App',
+          desc: 'A safe, high-speed messaging platform with completely private texts, group chats, and free voice/video calling.',
           badge: '1 Year Online',
           link: 'https://pulse-msg.vercel.app/'
         },
         {
           name: 'VesGPT',
-          role: 'In-House AI Architecture',
-          desc: 'Custom proprietary AI model and workflow architecture tailored for autonomous operational logic and assistive generation.',
-          badge: 'Proprietary AI',
+          role: 'Custom AI Assistant',
+          desc: 'Our own AI tool built to answer questions, write content, and automate repetitive tasks.',
+          badge: 'AI Tool',
           link: null
         },
         {
-          name: 'PC27 Cricket (Paper Cricket 27)',
-          role: 'Interactive Gaming Platform',
-          desc: 'Interactive browser-based cricket gaming platform featuring seasonal content, responsive multiplayer algorithms, and community integration.',
-          badge: 'Live Game',
+          name: 'PC27 Cricket',
+          role: 'Online Browser Game',
+          desc: 'A fun, lightweight cricket game you can pick up and play instantly in your browser.',
+          badge: 'Playable Game',
           link: null
         }
       ]
     },
     {
       id: 'esports',
-      name: 'VOBA Esports',
-      subtitle: 'Tournament Logistics & Competitive Gaming',
+      name: 'Gaming & Tournaments',
+      shortName: 'VOBA Esports',
+      subtitle: 'Competitive Gaming & Leagues',
       icon: Gamepad2,
       color: 'amber',
       badge: 'Esports & Gaming',
-      desc: 'Powering competitive tournament infrastructures, fair-play enforcement, and exhilarating racing/action game development.',
+      desc: 'Organizing competitive gaming tournaments, managing leaderboards, and developing fast-paced multiplayer games.',
       items: [
         {
           name: 'Clutch League',
-          role: 'Official Tournament Operations',
-          desc: 'Official competitive tournament system, bracket management, live caster pipelines, and high-stakes eSports league play.',
+          role: 'Official Tournaments',
+          desc: 'Our official tournament system where players and teams compete in organized brackets with live standings.',
           badge: 'Official League',
           link: null
         },
         {
           name: 'Pulse Drifters',
-          role: 'Adrenaline Gaming Project',
-          desc: 'High-adrenaline high-speed gaming project under the VOBA gaming portfolio engineered for competitive multiplayer racers.',
-          badge: 'Gaming Studio',
+          role: 'Racing Game Project',
+          desc: 'An action-packed multiplayer racing game project built for speed and competition.',
+          badge: 'In Development',
           link: null
         }
       ]
     },
     {
       id: 'media',
-      name: 'VOBA Media & Cinema',
-      subtitle: 'Broadcast, Cinematography & Audio Scoring',
+      name: 'Films & Streaming',
+      shortName: 'VOBA Media',
+      subtitle: 'Movies, Live Broadcasts & Music',
       icon: Video,
       color: 'red',
-      badge: 'Media Production',
-      desc: 'Cinematic film production, commercial-grade cinema camera crews, original music scoring, and daily live broadcast entertainment.',
+      badge: 'Media & Video',
+      desc: 'Directing short films, running daily Twitch streams, shooting with professional cameras, and composing original music.',
       items: [
         {
           name: 'Porom Vlogs',
-          role: 'Daily Live Broadcasting Channel',
-          desc: 'Official daily streaming broadcast running live on Twitch covering creator updates, gaming sessions, and community interaction.',
-          badge: 'Twitch Daily',
+          role: 'Daily Live Streams on Twitch',
+          desc: 'Daily gaming and community live streams on Twitch where we play games, share updates, and talk with viewers.',
+          badge: 'Daily on Twitch',
           link: 'https://twitch.tv'
         },
         {
           name: 'VOBA Cinema Crew',
-          role: 'Film Crew & Camera Operators',
-          desc: 'In-house cinema camera crew and film production unit specializing in commercial-grade visuals, color grading, and screenwriting.',
-          badge: 'Cinema Production',
+          role: 'Camera & Video Production',
+          desc: 'Our video team handling lighting, camera angles, color correction, and video editing for movies and projects.',
+          badge: 'Film Crew',
           link: null
         },
         {
           name: 'P2 Productions',
-          role: 'Original Scoring & Film Direction',
-          desc: 'Creative home for the short film NARCOTICS, soundtrack composition, Foley recording, sound design, and audio master production.',
+          role: 'Original Film Banner',
+          desc: 'The creative banner behind our crime thriller short film NARCOTICS and original music tracks.',
           badge: 'Film Banner',
           link: '#narcotics'
         }
@@ -116,32 +113,33 @@ export const VobaSection: React.FC = () => {
     },
     {
       id: 'labs',
-      name: 'VOBA Labs & Engineering',
-      subtitle: 'Hardware Repair, Security & Diagnostics',
+      name: 'Electronics & Tech Lab',
+      shortName: 'VOBA Labs',
+      subtitle: 'Gadget Repair & Safety Checks',
       icon: Wrench,
       color: 'cyan',
       badge: 'Hardware & Security',
-      desc: 'Component-level board diagnostics, custom system assembly, offensive-tested defensive security auditing, and hardware rehabilitation.',
+      desc: 'Repairing broken computer motherboards, soldering small electronics, and testing software to keep it safe from hackers.',
       items: [
         {
-          name: 'Hardware Operations',
-          role: 'Component-Level Electronics Diagnostics',
-          desc: 'Micro-soldering, hardware motherboard analysis, component-level repairs, performance overclocking, and custom rigs.',
+          name: 'Electronics & PC Repair',
+          role: 'Hardware Diagnostics & Soldering',
+          desc: 'Finding broken circuits, soldering small microchips, fixing laptops and consoles, and building custom computers.',
           badge: 'Lab Services',
           link: null
         },
         {
-          name: 'Mindful Blocker & Productivity Tools',
-          role: 'System Software & Utilities',
-          desc: 'Lightweight browser utilities and focus automation tools protecting user attention and privacy across web sessions.',
-          badge: 'Utilities',
+          name: 'Mindful Blocker',
+          role: 'Focus & Productivity Tool',
+          desc: 'A simple tool that blocks time-wasting websites so you can get more work done without distractions.',
+          badge: 'Free Utility',
           link: null
         },
         {
-          name: 'Defensive Security & Privacy Audits',
-          role: 'Adversarial Review & Hardening',
-          desc: 'Leveraging offensive Kali Linux/BlackArch experience to build resilient zero-trust architectures and harden web endpoints.',
-          badge: 'SecOps',
+          name: 'Security Checks',
+          role: 'Testing & Protecting Apps',
+          desc: 'Testing apps and websites to find security holes and fix them before anyone can abuse them.',
+          badge: 'Cyber Safety',
           link: null
         }
       ]
@@ -153,210 +151,155 @@ export const VobaSection: React.FC = () => {
     : DIVISIONS.filter(d => d.id === activeTab);
 
   return (
-    <section id="voba" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#07080a] border-b border-white/5 relative overflow-hidden">
-      {/* Background ambient branding glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-5xl h-96 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-purple-500/10 rounded-full blur-[140px] pointer-events-none" />
-
+    <section id="voba" className="py-20 sm:py-28 px-4 sm:px-8 lg:px-16 bg-[#07080a] border-b border-zinc-800/80 relative">
       <div className="max-w-6xl mx-auto relative z-10">
         
-        {/* Enterprise Banner / Header */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-xl mb-16 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-          
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              
-              {/* VOBA Official Logo Avatar */}
-              <div className="relative group shrink-0">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-zinc-950 border-2 border-emerald-500/40 p-1 flex items-center justify-center shadow-[0_0_35px_rgba(16,185,129,0.25)] overflow-hidden transition-transform duration-300 group-hover:scale-105">
-                  <img 
-                    src="/VOBA.png" 
-                    alt="VOBA Enterprise Logo" 
-                    className="w-full h-full object-contain filter drop-shadow"
-                    onError={(e) => {
-                      // Fallback if image fails to load in preview
-                      const target = e.currentTarget;
-                      target.style.display = 'none';
-                    }}
-                  />
-                  <div className="w-full h-full flex items-center justify-center bg-zinc-900 text-white font-black text-2xl font-heading hidden">
-                    VOBA
-                  </div>
-                </div>
-                <div className="absolute -bottom-1 -right-1 px-2 py-0.5 rounded bg-emerald-500 text-[10px] font-black text-black uppercase tracking-wider">
-                  HQ
-                </div>
+        {/* Enterprise Header Box */}
+        <div className="p-6 sm:p-10 rounded-3xl bg-zinc-900/60 border border-zinc-800 backdrop-blur-sm mb-12">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+              {/* Logo */}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-zinc-950 border border-emerald-500/30 p-2 flex items-center justify-center shrink-0 shadow-md">
+                <img 
+                  src="/VOBA.png" 
+                  alt="VOBA" 
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
 
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
-                  <Building2 size={13} /> Multi-Sector Enterprise
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-2">
+                  <Building2 size={13} /> Founded & Managed by Vesni Lanus
                 </div>
-                <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading tracking-tight">
-                  VOBA <span className="text-zinc-500 text-xl sm:text-2xl font-normal lowercase font-sans">/ enterprise</span>
+                <h2 className="text-3xl sm:text-4xl font-bold uppercase text-white font-heading">
+                  VOBA <span className="text-zinc-500 text-lg font-normal font-sans lowercase">/ my company</span>
                 </h2>
-                <p className="text-zinc-400 text-xs sm:text-sm mt-1 max-w-xl">
-                  Managed and Founded by <strong className="text-white">Vesni Lanus</strong>. Uniting creative technology, competitive gaming, cinema production, and hardware engineering.
+                <p className="text-zinc-300 text-sm mt-1 max-w-xl leading-relaxed">
+                  VOBA is my company that brings together 4 areas I love: software apps, competitive gaming tournaments, film production, and electronics repair.
                 </p>
               </div>
             </div>
 
-            {/* Direct Portal CTA */}
-            <div className="flex flex-wrap items-center gap-3">
+            {/* Direct Link */}
+            <div>
               <a
                 href="https://vobastudios.vercel.app/"
                 target="_blank"
                 rel="noreferrer"
-                className="px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-emerald-500/20 hover:scale-105"
+                className="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider inline-flex items-center gap-2 transition-all shadow-md hover:scale-105"
               >
-                Visit VOBA Studios <ArrowUpRight size={16} />
+                Visit VOBA Website <ExternalLink size={14} />
               </a>
             </div>
-          </div>
 
-          {/* Quick Summary Pill Bar */}
-          <div className="mt-8 pt-6 border-t border-zinc-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-            <div className="flex items-center gap-2 text-zinc-300">
-              <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
-              <span>4 Core Operational Divisions</span>
-            </div>
-            <div className="flex items-center gap-2 text-zinc-300">
-              <CheckCircle2 size={16} className="text-cyan-400 shrink-0" />
-              <span>Pulse Messenger Ecosystem</span>
-            </div>
-            <div className="flex items-center gap-2 text-zinc-300">
-              <CheckCircle2 size={16} className="text-amber-400 shrink-0" />
-              <span>Clutch League eSports</span>
-            </div>
-            <div className="flex items-center gap-2 text-zinc-300">
-              <CheckCircle2 size={16} className="text-red-400 shrink-0" />
-              <span>VOBA Cinema & Camera Crew</span>
-            </div>
           </div>
         </div>
 
         {/* Division Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
+        <div className="flex flex-wrap items-center gap-2 mb-8">
           <button
             onClick={() => setActiveTab('all')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${
-              activeTab === 'all' 
-                ? 'bg-white text-black' 
+            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              activeTab === 'all'
+                ? 'bg-white text-black'
                 : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
             }`}
           >
-            All Divisions (4)
+            All 4 Divisions
           </button>
-          <button
-            onClick={() => setActiveTab('interactive')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${
-              activeTab === 'interactive' 
-                ? 'bg-emerald-500 text-black' 
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
-            }`}
-          >
-            VOBA Interactive (Apps & AI)
-          </button>
-          <button
-            onClick={() => setActiveTab('esports')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${
-              activeTab === 'esports' 
-                ? 'bg-amber-500 text-black' 
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
-            }`}
-          >
-            VOBA Esports (Clutch League)
-          </button>
-          <button
-            onClick={() => setActiveTab('media')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${
-              activeTab === 'media' 
-                ? 'bg-red-500 text-white' 
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
-            }`}
-          >
-            VOBA Media (Cinema & Twitch)
-          </button>
-          <button
-            onClick={() => setActiveTab('labs')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all ${
-              activeTab === 'labs' 
-                ? 'bg-cyan-500 text-black' 
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
-            }`}
-          >
-            VOBA Labs (Hardware & Repairs)
-          </button>
+
+          {DIVISIONS.map(d => (
+            <button
+              key={d.id}
+              onClick={() => setActiveTab(d.id as any)}
+              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                activeTab === d.id
+                  ? 'bg-emerald-500 text-black font-bold'
+                  : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+              }`}
+            >
+              <d.icon size={14} />
+              {d.name}
+            </button>
+          ))}
         </div>
 
-        {/* Divisions Detailed Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredDivisions.map((div) => {
-            const Icon = div.icon;
+        {/* Division Cards */}
+        <div className="space-y-8">
+          {filteredDivisions.map(division => {
+            const Icon = division.icon;
             return (
               <div 
-                key={div.id}
-                className="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between"
+                key={division.id}
+                className="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-700 transition-all"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-white">
-                        <Icon size={20} className={
-                          div.color === 'emerald' ? 'text-emerald-400' :
-                          div.color === 'amber' ? 'text-amber-400' :
-                          div.color === 'red' ? 'text-red-400' : 'text-cyan-400'
-                        } />
-                      </div>
-                      <div>
-                        <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 block">
-                          {div.badge}
-                        </span>
-                        <h3 className="text-xl font-bold text-white font-heading">
-                          {div.name}
-                        </h3>
-                      </div>
+                {/* Division Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-zinc-800/80 gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-emerald-400">
+                      <Icon size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-white font-heading">
+                        {division.name} <span className="text-xs text-zinc-400 font-normal font-sans">({division.shortName})</span>
+                      </h3>
+                      <p className="text-xs text-zinc-400">
+                        {division.subtitle}
+                      </p>
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-zinc-400 mb-6 leading-relaxed">
-                    {div.desc}
-                  </p>
+                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-zinc-800/80 text-zinc-300 w-fit">
+                    {division.badge}
+                  </span>
+                </div>
 
-                  {/* Division Holdings Items */}
-                  <div className="space-y-3 pt-4 border-t border-zinc-800/80">
-                    {div.items.map((item, idx) => (
-                      <div 
-                        key={idx}
-                        className="p-3.5 rounded-xl bg-zinc-950/70 border border-zinc-800/80 hover:border-zinc-700 transition-colors"
-                      >
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                            {item.name}
-                            {item.link && (
-                              <a 
-                                href={item.link} 
-                                target={item.link.startsWith('http') ? '_blank' : '_self'} 
-                                rel="noreferrer"
-                                className="text-emerald-400 hover:text-emerald-300"
-                              >
-                                <ExternalLink size={12} />
-                              </a>
-                            )}
-                          </h4>
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+                <p className="text-zinc-300 text-sm mb-6 leading-relaxed">
+                  {division.desc}
+                </p>
+
+                {/* Sub-projects Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {division.items.map((item, idx) => (
+                    <div 
+                      key={idx}
+                      className="p-5 rounded-xl bg-zinc-950/70 border border-zinc-800/80 hover:border-zinc-700 transition-all flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 border border-zinc-800">
                             {item.badge}
                           </span>
                         </div>
-                        <span className="text-[11px] text-zinc-400 font-medium block mb-1">
+                        <h4 className="text-base font-bold text-white mb-1">
+                          {item.name}
+                        </h4>
+                        <span className="text-xs text-emerald-400/90 font-medium block mb-2">
                           {item.role}
                         </span>
-                        <p className="text-xs text-zinc-400 leading-normal">
+                        <p className="text-xs text-zinc-400 leading-relaxed">
                           {item.desc}
                         </p>
                       </div>
-                    ))}
-                  </div>
+
+                      {item.link && (
+                        <div className="pt-4 mt-3 border-t border-zinc-900">
+                          <a
+                            href={item.link}
+                            target={item.link.startsWith('http') ? '_blank' : '_self'}
+                            rel="noreferrer"
+                            className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1"
+                          >
+                            Open {item.name} <ArrowRight size={12} />
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
 
               </div>
