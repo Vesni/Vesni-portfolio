@@ -21,18 +21,25 @@ import {
   ExternalLink,
   Music,
   Film,
-  Flame,
-  Activity,
+  Building2,
   Layers,
   Sparkles,
   Move,
   Radio,
   Lock,
-  ChevronDown
+  ChevronDown,
+  GraduationCap,
+  Briefcase,
+  Award
 } from 'lucide-react';
+
 import ProjectCard from './components/ArtistCard'; 
 import NarcoticsSection from './components/NarcoticsSection';
-import BandsSection from './components/BandsSection';
+import MusicCatalogSection from './components/MusicCatalogSection';
+import PulseAnniversarySection from './components/PulseAnniversarySection';
+import VobaSection from './components/VobaSection';
+import CareerEducationSection from './components/CareerEducationSection';
+import SkillsEcosystemSection from './components/SkillsEcosystemSection';
 import PageIntro from './components/PageIntro';
 import KaliModal from './components/KaliModal';
 import { Project } from './types';
@@ -41,25 +48,35 @@ const PROJECTS: Project[] = [
   { 
     id: '01', 
     title: 'PULSE MESSENGER', 
-    techStack: 'WebSockets • Real-Time • Cloud Architecture', 
-    tags: ['Chat Platform', 'Real-Time Messaging', 'Web App'],
-    year: '2025',
+    techStack: 'WebSockets • Real-Time • E2EE Mesh', 
+    tags: ['Flagship App', '1-Year Milestone', 'Web & Mobile'],
+    year: '2024–2025',
     image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop',
-    description: 'A modern, high-speed real-time chat platform engineered for instant messaging, private channels, and seamless cross-device communication.',
+    description: 'Modern, high-speed real-time communication platform engineered for instant messaging, private groups, and seamless zero-latency voice/video streaming.',
     link: 'https://pulse-msg.vercel.app/'
   },
   { 
     id: '02', 
+    title: 'VOBA STUDIOS HQ', 
+    techStack: 'Enterprise Portal • React • Cloud Edge', 
+    tags: ['Enterprise', 'Gaming & eSports', 'Cinema'],
+    year: '2025',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop',
+    description: 'Central portal for VOBA, uniting VOBA Interactive (Pulse Messenger, VesGPT), VOBA Esports (Clutch League), VOBA Media, and VOBA Labs.',
+    link: 'https://vobastudios.vercel.app/'
+  },
+  { 
+    id: '03', 
     title: 'VESNI STUDIOS', 
     techStack: 'Audio Engine • Web Stack', 
     tags: ['Music', 'Studio', 'Discography'],
     year: '2025',
     image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1000&auto=format&fit=crop',
-    description: 'Central hub for original music produced by Vesni. Features a high-fidelity interface to explore albums, singles, and soundscapes.',
+    description: 'Central hub for original music produced by Vesni. Explore albums, singles including "She Likes My Clam" and "BANDS" (25k+ streams).',
     link: 'https://vesnistudios.vercel.app/'
   },
   { 
-    id: '03', 
+    id: '04', 
     title: 'SILKY WAY', 
     techStack: 'Next.js • Firebase', 
     tags: ['Marketplace', 'Real-time Chat', 'E-Commerce'],
@@ -69,7 +86,7 @@ const PROJECTS: Project[] = [
     link: 'https://silky-way.vercel.app/#/'
   },
   { 
-    id: '04', 
+    id: '05', 
     title: 'VESNI OS', 
     techStack: 'JavaScript • CSS3 • Web Kernel', 
     tags: ['Web OS', 'Window Manager', 'Interactive'],
@@ -79,7 +96,7 @@ const PROJECTS: Project[] = [
     link: 'https://vesni-os.vercel.app/'
   },
   { 
-    id: '05', 
+    id: '06', 
     title: 'CYBER OS', 
     techStack: 'React • Strategy Engine', 
     tags: ['Hacking Game', 'Cybersecurity', 'Simulation'],
@@ -87,93 +104,93 @@ const PROJECTS: Project[] = [
     image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=1000&auto=format&fit=crop',
     description: 'A strategic hacking simulation where players choose between White Hat defense and Black Hat offense to secure or breach simulated networks.',
     link: 'https://hacksim.vercel.app/'
-  },
-  { 
-    id: '06', 
-    title: 'LIFESTEAL\'26', 
-    techStack: 'Community Hub • Management Portal', 
-    tags: ['Minecraft', 'SMP', 'Community'],
-    year: '2024',
-    image: 'https://images.unsplash.com/photo-1587573089734-09cb69c0f2b4?q=80&w=1000&auto=format&fit=crop',
-    description: 'The official portal for the Lifesteal\'26 Minecraft SMP server community. Organized and managed by Vesni.',
-    link: 'https://lifesteal26.vercel.app/'
   }
 ];
 
 const ACHIEVEMENTS = [
   { 
     id: '01', 
-    title: '25,000+ Music Plays', 
-    desc: 'Surpassed 25,000+ unique streams on SoundCloud and multi-platform digital music releases.', 
-    icon: Music, 
+    title: 'Founder & MD of VOBA', 
+    desc: 'Managing a multi-sector enterprise uniting creative technology, competitive gaming (Clutch League), cinema, and hardware labs.', 
+    icon: Building2, 
     color: 'text-emerald-400', 
-    metric: '25K+ Streams' 
+    metric: 'Enterprise Founder' 
   },
   { 
     id: '02', 
+    title: 'Pulse Messenger 1 Year Online', 
+    desc: 'Celebrating 1-year anniversary since public deployment of the real-time encrypted messaging and calling platform.', 
+    icon: Sparkles, 
+    color: 'text-cyan-400', 
+    metric: '365+ Days Uptime' 
+  },
+  { 
+    id: '03', 
+    title: '25,000+ Music Plays & New Singles', 
+    desc: 'Surpassed 25k plays on SoundCloud with hit single BANDS; new single "She Likes My Clam" out worldwide on YouTube.', 
+    icon: Music, 
+    color: 'text-rose-400', 
+    metric: '25K+ Streams' 
+  },
+  { 
+    id: '04', 
     title: 'Film Director: NARCOTICS', 
-    desc: 'Wrote and directed the neo-noir crime thriller short film NARCOTICS presented by P2 Productions.', 
+    desc: 'Wrote and directed neo-noir crime thriller short film NARCOTICS presented by P2 Productions starring Arun in his debut role.', 
     icon: Film, 
     color: 'text-red-400', 
     metric: 'P2 Productions' 
   },
   { 
-    id: '03', 
-    title: 'Operating System Architect', 
-    desc: 'Engineered custom web desktop operating systems including Vesni OS and Cyber OS.', 
-    icon: Cpu, 
-    color: 'text-purple-400', 
-    metric: 'Web OS Engine' 
-  },
-  { 
-    id: '04', 
-    title: 'Security & Infrastructure Auditing', 
-    desc: 'Conducted ethical security audits, vulnerability scanning, and hardening across networks.', 
-    icon: Shield, 
-    color: 'text-cyan-400', 
-    metric: 'Ethical Security' 
-  },
-  { 
     id: '05', 
-    title: 'Game Scaling & Infrastructure', 
-    desc: 'Scaled PC26 Cricket to support high concurrent active user sessions seamlessly.', 
-    icon: Gamepad2, 
+    title: 'GUVI IIT Madras Certified', 
+    desc: 'Certified in Full-Stack Web Development via GUVI IIT Madras Research Park; certified in Digital Marketing by HubSpot.', 
+    icon: Award, 
     color: 'text-amber-400', 
-    metric: 'High Concurrency' 
+    metric: 'Accredited' 
   },
   { 
     id: '06', 
-    title: 'Athletic Versatility', 
-    desc: 'Dynamic football player adaptable to any position across the pitch from defense to attack.', 
-    icon: Move, 
-    color: 'text-rose-400', 
-    metric: 'All-Rounder' 
+    title: 'Offensive to Defensive Security', 
+    desc: 'Deep hands-on red team experience using Kali Linux & BlackArch, translating into hardened zero-trust web architectures.', 
+    icon: Shield, 
+    color: 'text-blue-400', 
+    metric: 'SecOps Auditor' 
   }
 ];
 
 const SOCIALS = [
-  { name: 'GitHub', icon: Github, url: 'https://github.com/Vesni', label: 'github.com/Vesni' },
   { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/vesni-lanus/', label: 'linkedin.com/in/vesni-lanus' },
-  { name: 'Spotify', icon: Music, url: 'https://open.spotify.com/track/4ZaaaNrR5y7vm9I4gRBtYr?autoplay_ok=1', label: 'Official Discography' },
+  { name: 'GitHub', icon: Github, url: 'https://github.com/Vesni', label: 'github.com/Vesni' },
+  { name: 'VOBA Studios', icon: Building2, url: 'https://vobastudios.vercel.app/', label: 'vobastudios.vercel.app' },
+  { name: 'Pulse Messenger', icon: Sparkles, url: 'https://pulse-msg.vercel.app/', label: 'pulse-msg.vercel.app' },
+  { name: 'YouTube Song', icon: Music, url: 'https://www.youtube.com/watch?app=desktop&v=X1dChjNLFGQ', label: 'She Likes My Clam' },
+  { name: 'Spotify', icon: HeadphonesIcon, url: 'https://open.spotify.com/track/4ZaaaNrR5y7vm9I4gRBtYr?autoplay_ok=1', label: 'Official Discography' },
   { name: 'Gaana', icon: Radio, url: 'https://gaana.com/artist/vesni-lanus', label: 'Artist Profile' },
   { name: 'Email', icon: Mail, url: 'mailto:vesni277@gmail.com', label: 'vesni277@gmail.com' }
 ];
 
+function HeadphonesIcon(props: any) {
+  return <Music {...props} />;
+}
+
 const NAV_ITEMS = [
+  { label: 'VOBA', id: 'voba' },
+  { label: 'Pulse 1Y', id: 'pulse' },
   { label: 'Film', id: 'narcotics' },
-  { label: 'Music', id: 'bands' },
-  { label: 'Projects', id: 'projects' },
-  { label: 'Milestones', id: 'achievements' },
+  { label: 'Music', id: 'music' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Software', id: 'projects' },
   { label: 'About', id: 'about' },
   { label: 'Contact', id: 'contact' }
 ];
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [showIntro, setShowIntro] = useState<boolean>(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isKaliModalOpen, setIsKaliModalOpen] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('narcotics');
+  const [activeSection, setActiveSection] = useState<string>('voba');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -203,7 +220,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0c] text-white font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#07080a] text-white font-sans selection:bg-emerald-500 selection:text-black">
       
       {/* PAGE INTRO OVERLAY */}
       <AnimatePresence>
@@ -213,24 +230,37 @@ const App: React.FC = () => {
       </AnimatePresence>
 
       {/* Top Navigation */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-[#0a0a0c]/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-[#07080a]/85 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           
-          {/* Logo */}
+          {/* Logo & Brand */}
           <div 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center font-bold text-sm group-hover:bg-emerald-400 transition-colors">
-              V
+            <div className="w-9 h-9 rounded-xl bg-zinc-950 border border-emerald-500/40 p-1 flex items-center justify-center group-hover:border-emerald-400 transition-colors shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+              <img 
+                src="/VOBA.png" 
+                alt="VOBA" 
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+              <span className="font-black text-xs text-white">V</span>
             </div>
-            <span className="font-bold text-base tracking-tight font-heading">
-              VESNI
-            </span>
+            <div>
+              <span className="font-bold text-base tracking-tight font-heading block leading-none">
+                VESNI LANUS
+              </span>
+              <span className="text-[10px] text-emerald-400 font-semibold uppercase tracking-widest leading-tight">
+                FOUNDER OF VOBA
+              </span>
+            </div>
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider">
+          <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold uppercase tracking-wider">
             {NAV_ITEMS.map(item => (
               <button
                 key={item.id}
@@ -247,34 +277,36 @@ const App: React.FC = () => {
           </nav>
 
           {/* Right Action: Replay Intro + Contact Button */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={() => setShowIntro(true)}
-              className="px-3 py-1.5 rounded-lg text-[11px] font-semibold text-zinc-400 hover:text-emerald-400 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-all"
+              className="px-3 py-1.5 rounded-lg text-[11px] font-semibold text-zinc-400 hover:text-emerald-400 hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-all cursor-pointer"
             >
-              Play Intro
+              Replay Intro
             </button>
 
-            <button
-              onClick={() => scrollTo('contact')}
-              className="px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-bold uppercase tracking-wider text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
+            <a
+              href="https://vobastudios.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-emerald-500/20"
             >
-              Get in Touch
-            </button>
+              VOBA HQ
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white"
+            className="lg:hidden p-2 rounded-lg text-zinc-400 hover:text-white"
           >
-            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
 
         {/* Mobile Dropdown */}
         {isMenuOpen && (
-          <div className="md:hidden bg-[#0a0a0c] border-b border-zinc-800 px-6 py-6 space-y-4">
+          <div className="lg:hidden bg-[#0a0c10] border-b border-zinc-800 px-6 py-6 space-y-3 max-h-[80vh] overflow-y-auto">
             {NAV_ITEMS.map(item => (
               <button
                 key={item.id}
@@ -284,12 +316,22 @@ const App: React.FC = () => {
                 {item.label}
               </button>
             ))}
-            <button
-              onClick={() => { setIsMenuOpen(false); setShowIntro(true); }}
-              className="block w-full text-left py-2 text-sm font-semibold uppercase tracking-wider text-zinc-400 hover:text-white"
-            >
-              Replay Intro
-            </button>
+            <div className="pt-4 border-t border-zinc-800 flex items-center justify-between">
+              <button
+                onClick={() => { setIsMenuOpen(false); setShowIntro(true); }}
+                className="text-xs text-zinc-400 hover:text-white"
+              >
+                Replay Intro
+              </button>
+              <a
+                href="https://vobastudios.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-1.5 rounded-md bg-emerald-500 text-black font-bold text-xs uppercase"
+              >
+                VOBA HQ
+              </a>
+            </div>
           </div>
         )}
       </header>
@@ -300,61 +342,80 @@ const App: React.FC = () => {
         <section className="min-h-[85vh] flex flex-col items-center justify-center px-6 py-20 text-center relative overflow-hidden">
           
           {/* Subtle Ambient Light */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-80 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-blue-500/10 rounded-full blur-[140px] pointer-events-none" />
 
           <div className="max-w-4xl mx-auto relative z-10">
             
             {/* Tagline Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 text-xs font-medium mb-8">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              Full-Stack Developer • Film Director • Music Producer
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-8 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              Founder & Managing Director of VOBA • Full-Stack Engineer • Film Director
             </div>
 
             {/* Name */}
-            <h1 className="text-6xl sm:text-8xl md:text-9xl font-black tracking-tight text-white uppercase font-heading mb-6">
-              VESNI
+            <h1 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tight text-white uppercase font-heading mb-6">
+              VESNI <span className="text-emerald-400">LANUS</span>
             </h1>
 
             {/* Bio summary */}
-            <p className="text-zinc-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 font-normal">
-              Building modern software systems, directing independent cinema with <strong className="text-red-400 font-semibold">P2 Productions</strong>, and producing original music.
+            <p className="text-zinc-300 text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed mb-10 font-normal">
+              Turning ambitious ideas into polished, production-ready ecosystems. Specializing in full-stack engineering, modern UI/UX design, cinematic media with <strong className="text-red-400 font-semibold">P2 Productions</strong>, and defensive cybersecurity.
             </p>
 
             {/* Direct Action Buttons */}
-            <div className="flex flex-wrap gap-4 justify-center items-center">
+            <div className="flex flex-wrap gap-3.5 justify-center items-center">
+              <button
+                onClick={() => scrollTo('voba')}
+                className="px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-emerald-500/20 hover:scale-105"
+              >
+                <Building2 size={16} /> VOBA Enterprise
+              </button>
+
+              <button
+                onClick={() => scrollTo('pulse')}
+                className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-blue-600/20 hover:scale-105"
+              >
+                <Sparkles size={16} /> Pulse 1Y Anniversary
+              </button>
+
               <button
                 onClick={() => scrollTo('narcotics')}
-                className="px-7 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-red-600/20"
+                className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-red-600/20 hover:scale-105"
               >
-                <Film size={16} /> Short Film: NARCOTICS
+                <Film size={16} /> Film: NARCOTICS
               </button>
 
               <button
-                onClick={() => scrollTo('bands')}
-                className="px-7 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-emerald-500/20"
+                onClick={() => scrollTo('music')}
+                className="px-6 py-3.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-rose-600/20 hover:scale-105"
               >
-                <Music size={16} /> Single: BANDS (25k+ Streams)
-              </button>
-
-              <button
-                onClick={() => scrollTo('projects')}
-                className="px-7 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all"
-              >
-                <Cpu size={16} /> Software Vault
+                <Music size={16} /> Music Discography
               </button>
             </div>
 
           </div>
         </section>
 
-        {/* SECTION 1: NARCOTICS SHORT FILM */}
+        {/* SECTION 1: VOBA ENTERPRISE */}
+        <VobaSection />
+
+        {/* SECTION 2: PULSE MESSENGER 1-YEAR ANNIVERSARY */}
+        <PulseAnniversarySection />
+
+        {/* SECTION 3: NARCOTICS SHORT FILM (Poster & Arun Title Card) */}
         <NarcoticsSection />
 
-        {/* SECTION 2: BANDS MUSIC RELEASE */}
-        <BandsSection />
+        {/* SECTION 4: MUSIC CATALOG (She Likes My Clam & BANDS) */}
+        <MusicCatalogSection />
 
-        {/* SECTION 3: PROJECTS / SOFTWARE VAULT */}
-        <section id="projects" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#0c0c0f] border-b border-white/5">
+        {/* SECTION 5: EDUCATION, INTERNSHIP & CERTIFICATIONS */}
+        <CareerEducationSection />
+
+        {/* SECTION 6: CORE SKILL MATRIX & ECOSYSTEM */}
+        <SkillsEcosystemSection />
+
+        {/* SECTION 7: PROJECTS / SOFTWARE VAULT */}
+        <section id="projects" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#090a0d] border-b border-white/5">
           <div className="max-w-6xl mx-auto">
             
             {/* Header */}
@@ -364,7 +425,7 @@ const App: React.FC = () => {
                   Selected Work
                 </span>
                 <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading">
-                  Software Projects
+                  Software Applications
                 </h2>
               </div>
               <span className="text-xs text-zinc-500 font-medium">
@@ -386,8 +447,8 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* SECTION 4: ACHIEVEMENTS & MILESTONES */}
-        <section id="achievements" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#0a0a0c] border-b border-white/5">
+        {/* SECTION 8: ACHIEVEMENTS & MILESTONES */}
+        <section id="achievements" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#07080a] border-b border-white/5">
           <div className="max-w-6xl mx-auto">
             
             {/* Header */}
@@ -430,67 +491,90 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* SECTION 5: ABOUT */}
-        <section id="about" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#0c0c0f] border-b border-white/5">
-          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        {/* SECTION 9: DETAILED PROFESSIONAL BIO */}
+        <section id="about" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#090b0e] border-b border-white/5">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block">
-                About Vesni
-              </span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                Founder • Technologist • Director
+              </div>
+
               <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading leading-tight">
-                Creator & Developer
+                About Vesni Lanus
               </h2>
-              <div className="space-y-4 text-zinc-300 text-base sm:text-lg leading-relaxed font-normal">
+
+              <div className="space-y-4 text-zinc-300 text-sm sm:text-base leading-relaxed font-normal">
                 <p>
-                  I am <strong>Vesni</strong> — a multidisciplinary creator focusing on full-stack web development, independent cinema, and music production.
+                  I’m a developer, product strategist, and creative director passionate about turning ambitious ideas into polished, production-ready ecosystems. I specialize in full-stack engineering, modern UI/UX design, cinematic media, scalable digital infrastructure, and defensive cybersecurity.
                 </p>
                 <p>
-                  As Director at <strong className="text-white">P2 Productions</strong>, I lead original films, including our 2025 short film <strong className="text-red-400">NARCOTICS</strong> starring Arun in his debut role.
+                  My background includes hands-on experience in offensive security and red teaming using tools like <strong className="text-cyan-400 font-semibold">Kali Linux</strong> and <strong className="text-cyan-400 font-semibold">BlackArch</strong>. Today, I channel that adversarial mindset into architecting resilient systems, identifying vulnerabilities before they can be exploited, and building privacy-first protocols.
                 </p>
                 <p>
-                  In sound, I write, compose, produce, and mix tracks like <strong className="text-emerald-400">BANDS</strong> featuring R3$T, with over <strong className="text-white">25,000+ plays</strong> across SoundCloud and streaming platforms.
+                  Currently, I serve as the <strong className="text-emerald-400 font-semibold">Founder & Managing Director of VOBA</strong>—a multi-sector enterprise uniting creative technology, competitive gaming, hardware engineering, and digital media under one roof.
                 </p>
+              </div>
+
+              {/* LinkedIn Direct Connect Button */}
+              <div className="pt-4 flex flex-wrap gap-4 items-center">
+                <a
+                  href="https://www.linkedin.com/in/vesni-lanus/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-blue-600/20"
+                >
+                  <Linkedin size={16} /> Connect on LinkedIn
+                </a>
+
+                <a
+                  href="https://vobastudios.vercel.app/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-6 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all"
+                >
+                  <Building2 size={16} className="text-emerald-400" /> Visit VOBA Studios
+                </a>
               </div>
             </div>
 
+            {/* Right Card: Quick Identity Digest */}
             <div className="lg:col-span-5 p-8 rounded-2xl bg-zinc-900/60 border border-zinc-800 space-y-6">
               <h3 className="text-lg font-bold text-white font-heading">
-                Core Skills & Tools
+                Operational Overview
               </h3>
 
               <div className="space-y-4 text-xs">
-                <div>
-                  <span className="text-zinc-500 block uppercase font-medium mb-2">Development</span>
-                  <div className="flex flex-wrap gap-2">
-                    {['React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS', 'Vite', 'Firebase'].map(s => (
-                      <span key={s} className="px-3 py-1 rounded-md bg-zinc-800 text-zinc-200 font-semibold">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+                <div className="p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800">
+                  <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider block mb-1">
+                    Enterprise
+                  </span>
+                  <span className="text-sm font-bold text-white block">VOBA (Founder & MD)</span>
+                  <p className="text-zinc-400 text-xs mt-1">VOBA Interactive, VOBA Esports, VOBA Media, VOBA Labs.</p>
                 </div>
 
-                <div>
-                  <span className="text-zinc-500 block uppercase font-medium mb-2">Film & Direction</span>
-                  <div className="flex flex-wrap gap-2">
-                    {['P2 Productions', 'NARCOTICS', 'Screenplay', 'Directing', 'Color Grading'].map(s => (
-                      <span key={s} className="px-3 py-1 rounded-md bg-red-950/40 text-red-300 border border-red-900/40 font-semibold">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+                <div className="p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800">
+                  <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-wider block mb-1">
+                    Flagship Comms
+                  </span>
+                  <span className="text-sm font-bold text-white block">Pulse Messenger</span>
+                  <p className="text-zinc-400 text-xs mt-1">1 Year Online • Real-time encrypted messaging and calling.</p>
                 </div>
 
-                <div>
-                  <span className="text-zinc-500 block uppercase font-medium mb-2">Music & Audio</span>
-                  <div className="flex flex-wrap gap-2">
-                    {['BANDS', 'Beat Production', 'Songwriting', 'Audio Mixing', 'SoundCloud'].map(s => (
-                      <span key={s} className="px-3 py-1 rounded-md bg-emerald-950/40 text-emerald-300 border border-emerald-900/40 font-semibold">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
+                <div className="p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800">
+                  <span className="text-[10px] text-red-400 font-bold uppercase tracking-wider block mb-1">
+                    Cinema & Production
+                  </span>
+                  <span className="text-sm font-bold text-white block">P2 Productions</span>
+                  <p className="text-zinc-400 text-xs mt-1">Directed short film NARCOTICS starring Arun.</p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800">
+                  <span className="text-[10px] text-rose-400 font-bold uppercase tracking-wider block mb-1">
+                    Music & Audio
+                  </span>
+                  <span className="text-sm font-bold text-white block">Vesni Discography</span>
+                  <p className="text-zinc-400 text-xs mt-1">"She Likes My Clam" (Out Now) • "BANDS" (25k+ streams).</p>
                 </div>
               </div>
             </div>
@@ -498,24 +582,24 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* SECTION 6: CONTACT / TRANSMIT */}
-        <footer id="contact" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#08080a]">
+        {/* SECTION 10: CONTACT / TRANSMIT */}
+        <footer id="contact" className="py-24 sm:py-32 px-6 sm:px-12 lg:px-20 bg-[#060709]">
           <div className="max-w-6xl mx-auto">
             
             <div className="text-center max-w-2xl mx-auto mb-16">
               <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block mb-2">
-                Connect
+                Connect & Inquire
               </span>
               <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-heading mb-4">
                 Get In Touch
               </h2>
               <p className="text-zinc-400 text-sm sm:text-base">
-                Feel free to reach out for collaborations, music inquiries, or software projects.
+                For software engineering, enterprise partnerships with VOBA, film commissions, or music production.
               </p>
             </div>
 
             {/* Social Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
               {SOCIALS.map(s => (
                 <a
                   key={s.name}
@@ -537,7 +621,7 @@ const App: React.FC = () => {
             <div className="mb-16 flex justify-center">
               <button
                 onClick={() => setIsKaliModalOpen(true)}
-                className="group inline-flex items-center gap-3 px-5 py-3 rounded-full bg-zinc-900/80 border border-zinc-800 hover:border-cyan-500/50 text-zinc-400 hover:text-cyan-300 transition-all duration-300 shadow-md hover:shadow-[0_0_25px_rgba(6,182,212,0.15)] cursor-pointer"
+                className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-zinc-900/90 border border-zinc-800 hover:border-cyan-500/50 text-zinc-400 hover:text-cyan-300 transition-all duration-300 shadow-lg hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] cursor-pointer"
               >
                 <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 group-hover:animate-ping" />
                 <span className="text-xs sm:text-sm font-medium">
@@ -549,11 +633,13 @@ const App: React.FC = () => {
 
             {/* Footer Bottom Line */}
             <div className="pt-8 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-              <span>© 2025 Vesni • P2 Productions</span>
+              <span>© 2025 Vesni Lanus • Founder of VOBA</span>
               <div className="flex flex-wrap gap-6 justify-center">
-                <span>Short Film: NARCOTICS</span>
-                <span>Single: BANDS (25k+ Streams)</span>
-                <span>Pulse Messenger</span>
+                <a href="https://vobastudios.vercel.app/" target="_blank" rel="noreferrer" className="hover:text-zinc-300">VOBA Studios</a>
+                <a href="https://pulse-msg.vercel.app/" target="_blank" rel="noreferrer" className="hover:text-zinc-300">Pulse Messenger (1Y)</a>
+                <a href="https://www.linkedin.com/in/vesni-lanus/" target="_blank" rel="noreferrer" className="hover:text-zinc-300">LinkedIn</a>
+                <span>Film: NARCOTICS</span>
+                <span>Music: She Likes My Clam</span>
               </div>
             </div>
 
